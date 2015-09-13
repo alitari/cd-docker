@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="helloworldws" resourceRoot="${projectDir}" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="HelloWorldServiceSoapBinding" type="wsdl" bindingName="{http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld}HelloWorldServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/wildfly-helloworld-ws?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/wildfly-helloworld-ws?wsdl"><con:part><con:url>http://localhost:8080/wildfly-helloworld-ws?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="HelloWorldService" targetNamespace="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http">
+  <wsdl:types>
+    <xs:schema elementFormDefault="unqualified" targetNamespace="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="sayHello" type="tns:sayHello"/>
+      <xs:element name="sayHelloResponse" type="tns:sayHelloResponse"/>
+      <xs:element name="sayHelloToName" type="tns:sayHelloToName"/>
+      <xs:element name="sayHelloToNameResponse" type="tns:sayHelloToNameResponse"/>
+      <xs:element name="sayHelloToNames" type="tns:sayHelloToNames"/>
+      <xs:element name="sayHelloToNamesResponse" type="tns:sayHelloToNamesResponse"/>
+      <xs:complexType name="sayHelloToName">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sayHelloToNameResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sayHelloToNames">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="arg0" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sayHelloToNamesResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sayHello">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="sayHelloResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="sayHelloToName">
+    <wsdl:part element="tns:sayHelloToName" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sayHelloToNamesResponse">
+    <wsdl:part element="tns:sayHelloToNamesResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sayHelloResponse">
+    <wsdl:part element="tns:sayHelloResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sayHelloToNameResponse">
+    <wsdl:part element="tns:sayHelloToNameResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sayHelloToNames">
+    <wsdl:part element="tns:sayHelloToNames" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sayHello">
+    <wsdl:part element="tns:sayHello" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="HelloWorldService">
+    <wsdl:operation name="sayHelloToName">
+      <wsdl:input message="tns:sayHelloToName" name="sayHelloToName"></wsdl:input>
+      <wsdl:output message="tns:sayHelloToNameResponse" name="sayHelloToNameResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sayHelloToNames">
+      <wsdl:input message="tns:sayHelloToNames" name="sayHelloToNames"></wsdl:input>
+      <wsdl:output message="tns:sayHelloToNamesResponse" name="sayHelloToNamesResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sayHello">
+      <wsdl:input message="tns:sayHello" name="sayHello"></wsdl:input>
+      <wsdl:output message="tns:sayHelloResponse" name="sayHelloResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="HelloWorldServiceSoapBinding" type="tns:HelloWorldService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="sayHelloToName">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="sayHelloToName">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="sayHelloToNameResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sayHelloToNames">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="sayHelloToNames">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="sayHelloToNamesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sayHello">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="sayHello">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="sayHelloResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HelloWorldService">
+    <wsdl:port binding="tns:HelloWorldServiceSoapBinding" name="HelloWorld">
+      <soap:address location="http://localhost:8080/wildfly-helloworld-ws"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/wildfly-helloworld-ws</con:endpoint></con:endpoints><con:operation isOneWay="false" action="" name="sayHello" bindingOperationName="sayHello" type="Request-Response" outputName="sayHelloResponse" inputName="sayHello" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/wildfly-helloworld-ws</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:hel="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <hel:sayHello/>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld/HelloWorldService/sayHello"/></con:call></con:operation><con:operation isOneWay="false" action="" name="sayHelloToName" bindingOperationName="sayHelloToName" type="Request-Response" outputName="sayHelloToNameResponse" inputName="sayHelloToName" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/wildfly-helloworld-ws</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:hel="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <hel:sayHelloToName>
+         <!--Optional:-->
+         <arg0>?</arg0>
+      </hel:sayHelloToName>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld/HelloWorldService/sayHelloToName"/></con:call></con:operation><con:operation isOneWay="false" action="" name="sayHelloToNames" bindingOperationName="sayHelloToNames" type="Request-Response" outputName="sayHelloToNamesResponse" inputName="sayHelloToNames" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/wildfly-helloworld-ws</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:hel="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <hel:sayHelloToNames>
+         <!--Zero or more repetitions:-->
+         <arg0>?</arg0>
+      </hel:sayHelloToNames>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld/HelloWorldService/sayHelloToNames"/></con:call></con:operation></con:interface><con:testSuite name="Availability"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="sayHello" searchProperties="true"><con:settings/><con:testStep type="delay" name="givin 2 seconds to be ready"><con:settings/><con:config><delay>2000</delay></con:config></con:testStep><con:testStep type="request" name="sayHello"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>HelloWorldServiceSoapBinding</con:interface><con:operation>sayHello</con:operation><con:request name="sayHello"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://${wshost}:${wsport}/${wsname}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:hel="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <hel:sayHello>Alex</hel:sayHello>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld/HelloWorldService/sayHello" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:testSuite name="HelloWorldServiceSoapBinding TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="sayHello TestCase" searchProperties="true" id="0b3367c5-351a-41b2-9354-71e638283ebe"><con:settings/><con:testStep type="request" name="sayHello"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>HelloWorldServiceSoapBinding</con:interface><con:operation>sayHello</con:operation><con:request name="sayHello"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://${wshost}:${wsport}/${wsname}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:hel="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <hel:sayHello>Alex</hel:sayHello>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:assertion type="Simple Contains" name="Contains"><con:configuration><token>Hello World!</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld/HelloWorldService/sayHello" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="sayHelloToName TestCase" searchProperties="true" id="f16a2b4f-d3c3-465f-9d55-f43da54f0bed"><con:settings/><con:testStep type="request" name="sayHelloToName"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>HelloWorldServiceSoapBinding</con:interface><con:operation>sayHelloToName</con:operation><con:request name="sayHelloToName"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://${wshost}:${wsport}/${wsname}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:hel="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <hel:sayHelloToName>
+         <!--Optional:-->
+         <arg0>Alex</arg0>
+      </hel:sayHelloToName>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:assertion type="Simple Contains" name="Contains"><con:configuration><token>Hello Alex!</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld/HelloWorldService/sayHelloToName" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="sayHelloToNames TestCase" searchProperties="true" id="7d697787-1688-4c66-95cd-989531d1d72d"><con:settings/><con:testStep type="request" name="sayHelloToNames"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>HelloWorldServiceSoapBinding</con:interface><con:operation>sayHelloToNames</con:operation><con:request name="sayHelloToNames"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://${wshost}:${wsport}/${wsname}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:hel="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <hel:sayHelloToNames>
+         <!--Zero or more repetitions:-->
+         <arg0>Alex</arg0>
+         <arg0>John</arg0>
+
+      </hel:sayHelloToNames>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:assertion type="Simple Contains" name="Contains"><con:configuration><token>Hello Alex &amp;amp; John!</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld/HelloWorldService/sayHelloToNames" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>endpoint</con:name><con:value>http://${wshost}:${wsport}/${wsname}</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
