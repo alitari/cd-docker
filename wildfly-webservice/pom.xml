@@ -1,14 +1,5 @@
 <?xml version="1.0"?>
-<!-- JBoss, Home of Professional Open Source Copyright 2013, Red Hat, Inc. 
-	and/or its affiliates, and individual contributors by the @authors tag. See 
-	the copyright.txt in the distribution for a full listing of individual contributors. 
-	Licensed under the Apache License, Version 2.0 (the "License"); you may not 
-	use this file except in compliance with the License. You may obtain a copy 
-	of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
-	by applicable law or agreed to in writing, software distributed under the 
-	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
-	OF ANY KIND, either express or implied. See the License for the specific 
-	language governing permissions and limitations under the License. -->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -17,30 +8,21 @@
 	<artifactId>wildfly-webservice</artifactId>
 	<version>1-${build.number}</version>
 	<packaging>war</packaging>
-	<name>Hello World JAX-WS Web service</name>
+	<name>wildfly-webservice</name>
 	<description>Hello World JAX-WS Web service</description>
 
 
 	<properties>
-		<major.version>1</major.version>
-		<minor.version>0</minor.version>
-		<patch.version>0</patch.version>
-		<main.version>${major.version}.${minor.version}.${patch.version}</main.version>
 
-
-		<!-- services-->
-		<dockerHostIp>192.168.0.16</dockerHostIp>
+		<!-- services -->
+		<dockerHostIp>localhost</dockerHostIp>
 		<dockerPort>2376</dockerPort>
-		<!-- <certPath></certPath> -->
-		<dockerHost>tcp://${dockerHostIp}:${dockerPort}</dockerHost>
 
 		<wshost>${dockerHostIp}</wshost>
 		<wsport>8888</wsport>
 
-		<nexusHost>${dockerHostIp}</nexusHost>
-        
-        <!--  docker image -->
-		<image.registryHost>${dockerHostIp}:5000/</image.registryHost>
+		<!-- docker image -->
+		<image.registryHost>registry:5000/</image.registryHost>
 		<image.namespace>alitari/</image.namespace>
 		<image.repository>wildfly-webservice</image.repository>
 		<image.version>${project.version}</image.version>
@@ -48,7 +30,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <!-- JBOSS -->
+		<!-- JBOSS -->
 		<version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
 		<version.jboss.bom>8.2.1.Final</version.jboss.bom>
 		<version.arquillian.container>8.0.0.Final</version.arquillian.container>
@@ -59,6 +41,9 @@
 		<version.surefire.plugin>2.12.4</version.surefire.plugin>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
+
+		<sonar.host.url>http://${dockerHostIp}:9000</sonar.host.url>
+		<sonar.jdbc.url>jdbc:postgresql://${dockerHostIp}:5432/sonar</sonar.jdbc.url>
 
 	</properties>
 
@@ -73,26 +58,15 @@
 	<distributionManagement>
 		<repository>
 			<id>releases</id>
-			<url>http://${nexusHost}:8081/content/repositories/releases/</url>
+			<url>http://nexus:8081/content/repositories/releases/</url>
 		</repository>
 	</distributionManagement>
 
 
 
 
-
 	<dependencyManagement>
 		<dependencies>
-			<!-- Define the version of JBoss' Java EE 7 APIs we want to import. Any 
-				dependencies from org.jboss.spec will have their version defined by this 
-				BOM -->
-			<!-- JBoss distributes a complete set of Java EE 7 APIs including a Bill 
-				of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection) 
-				of artifacts. We use this here so that we always get the correct versions 
-				of artifacts. Here we use the jboss-javaee-7.0 stack (you can read this as 
-				the JBoss stack of the Java EE 7 APIs). You can actually use this stack with 
-				any version of WildFly that implements Java EE 7, not just JBoss WildFly 
-				8! -->
 			<dependency>
 				<groupId>org.wildfly.bom</groupId>
 				<artifactId>jboss-javaee-7.0-with-tools</artifactId>
@@ -104,31 +78,26 @@
 	</dependencyManagement>
 
 	<dependencies>
-		<!-- Import the CDI API, we use provided scope as the API is included in 
-			JBoss WildFly -->
+		
+		
 		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- Import the Servlet API, we use provided scope as the API is included 
-			in JBoss WildFly -->
 		<dependency>
 			<groupId>org.jboss.spec.javax.servlet</groupId>
 			<artifactId>jboss-servlet-api_3.1_spec</artifactId>
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- Import the Common Annotations API (JSR-250), we use provided scope 
-			as the API is included in JBoss WildFly -->
 		<dependency>
 			<groupId>org.jboss.spec.javax.annotation</groupId>
 			<artifactId>jboss-annotations-api_1.2_spec</artifactId>
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- Test dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -140,8 +109,13 @@
 			<version>1.3</version>
 			<scope>test</scope>
 		</dependency>
-
-
+		
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+			<scope>provided</scope>
+		</dependency>
 
 	</dependencies>
 
@@ -152,21 +126,19 @@
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
 
-			
-
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>2.7</version>
 				<executions>
 					<execution>
-						<id>copy-resources</id>
+						<id>copy-docker</id>
 						<!-- here the phase you need -->
 						<phase>validate</phase>
 						<goals>
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${build.directory}</outputDirectory>
+							<outputDirectory>${project.build.directory}</outputDirectory>
 							<resources>
 								<resource>
 									<directory>docker</directory>
@@ -175,18 +147,34 @@
 							</resources>
 						</configuration>
 					</execution>
+					<execution>
+						<id>copy-main-resources</id>
+						<!-- here the phase you need -->
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/classes</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/main/resources</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 
-
-
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>${version.war.plugin}</version>
+				<version>2.5</version>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 					<manifest>
 						<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+						<addClasspath>true</addClasspath>
 					</manifest>
 					<archive>
 						<manifestEntries>
@@ -205,30 +193,19 @@
 				<configuration>
 					<logDate>default</logDate>
 					<autoPull>true</autoPull>
-					<!-- <dockerHost>http://${dockerHost}:${dockerPort}</dockerHost> -->
-					<!-- <certPath>${certPath}</certPath> -->
+					<dockerHost>tcp://${dockerHostIp}:${dockerPort}</dockerHost>
 					<images>
-						<!-- Docker Image to use -->
 						<image>
-							<!-- App-Server Image -->
 							<alias>server</alias>
 							<name>${image.registryHost}${image.namespace}${image.repository}:${image.version}</name>
 							<build>
-								<!-- The assembly descriptor prepares the "/maven" directory in the 
-									temporary data container which will be made available to the specified container. -->
 								<assembly>
-									<dockerFileDir>${build.directory}</dockerFileDir>
+									<dockerFileDir>${project.build.directory}</dockerFileDir>
 								</assembly>
 							</build>
 
 							<run>
-								<env>
-
-								</env>
 								<ports>
-									<!-- Port mappings: Container internal port (which must be exposed) 
-										will be dynamically mapped and this (random) port will be assigned to the 
-										maven variable ${jolokia.port}. Multiple port mappings can be specified here -->
 									<port>${wsport}:8080</port>
 								</ports>
 								<wait>
@@ -244,7 +221,6 @@
 								</log>
 							</run>
 						</image>
-
 					</images>
 				</configuration>
 				<!-- Connect this plugin to the maven lifecycle around the integration-test 
@@ -283,7 +259,7 @@
 				<artifactId>maven-soapui-extension-plugin</artifactId>
 				<version>4.6.4.2</version>
 				<configuration>
-					<projectFile>target/test-classes/helloworldws-soapui-project.xml</projectFile>
+					<projectFile>${project.build.directory}/test-classes/helloworldws-soapui-project.xml</projectFile>
 					<junitReport>true</junitReport>
 					<exportwAll>true</exportwAll>
 					<printReport>false</printReport>
@@ -291,7 +267,7 @@
 					<globalProperties>
 						<value>wshost=${wshost}</value>
 						<value>wsport=${wsport}</value>
-						<value>wsname=${artifactId}</value>
+						<value>wsname=${project.artifactId}</value>
 					</globalProperties>
 				</configuration>
 				<executions>
@@ -310,6 +286,11 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>2.3</version>
 			</plugin>
 		</plugins>
 	</build>
