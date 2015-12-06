@@ -1,0 +1,1 @@
+docker run --net host -it --rm --name mvn-build -v "$PWD":/usr/src/mymaven -v ~/.m2:/root/.m2 -v ~/.docker:/root/.docker -w /usr/src/mymaven maven:latest mvn clean install -Dbuild.number=1

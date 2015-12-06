@@ -22,7 +22,7 @@
 		<wsport>8888</wsport>
 
 		<!-- docker image -->
-		<image.registryHost>registry:5000/</image.registryHost>
+		<image.registryHost>${dockerHostIp}:5000/</image.registryHost>
 		<image.namespace>alitari/</image.namespace>
 		<image.repository>wildfly-webservice</image.repository>
 		<image.version>${project.version}</image.version>
@@ -58,7 +58,7 @@
 	<distributionManagement>
 		<repository>
 			<id>releases</id>
-			<url>http://nexus:8081/content/repositories/releases/</url>
+			<url>http://${dockerHostIp}:8081/content/repositories/releases/</url>
 		</repository>
 	</distributionManagement>
 
