@@ -28,7 +28,7 @@ class BasicSimulation extends Simulation {
              <hel:sayHello/>
            </soapenv:Body>"""))
       .check(status.is(200))
-      .check(bodyString.is("""<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><ns2:sayHelloResponse xmlns:ns2="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld"><return>Hello Wurld!</return></ns2:sayHelloResponse></soap:Body></soap:Envelope>""")))
+      .check(bodyString.is("""<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><ns2:sayHelloResponse xmlns:ns2="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld"><return>Hello World!</return></ns2:sayHelloResponse></soap:Body></soap:Envelope>""")))
   
       
       
@@ -46,4 +46,6 @@ class BasicSimulation extends Simulation {
   
       setUp(scn1.inject(atOnceUsers(5)).protocols(httpConf),
             scn2.inject(rampUsers(500) over (20 ) ).protocols(httpConf))
+            .assertions(global.successfulRequests.percent.is(100),
+                        global.responseTime.max.lessThan(500))
 }
