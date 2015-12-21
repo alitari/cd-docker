@@ -78,8 +78,8 @@
 	</dependencyManagement>
 
 	<dependencies>
-		
-		
+
+
 		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
@@ -109,7 +109,7 @@
 			<version>1.3</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -189,7 +189,7 @@
 			<plugin>
 				<groupId>org.jolokia</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.13.3</version>
+				<version>0.13.7</version>
 				<configuration>
 					<logDate>default</logDate>
 					<autoPull>true</autoPull>
@@ -210,9 +210,12 @@
 								</ports>
 								<wait>
 									<!-- The plugin waits until this URL is reachable via HTTP ... -->
-									<log>Server startup</log>
-									<url>http://${dockerHostIp}:${wsport}</url>
-									<time>60000</time>
+<!-- 									<log>WFLYSRV0025: WildFly Full 9.0.1.Final (WildFly Core 1.0.1.Final) started</log> -->
+<!-- 									<http> -->
+<!-- 										<url>http://${wshost}:${wsport}</url> -->
+<!-- 										<method>GET</method> -->
+<!-- 									</http> -->
+									<time>30000</time>
 									<shutdown>500</shutdown>
 								</wait>
 								<log>
