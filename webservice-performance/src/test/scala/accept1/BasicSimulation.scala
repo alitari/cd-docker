@@ -5,8 +5,10 @@ import io.gatling.http.Predef._
 
 class BasicSimulation extends Simulation {
 
+  val baseUrl = System.getProperty("baseUrl")
+  
   val httpConf = http
-    .baseURL("http://192.168.0.16:8078") // Here is the root for all relative URLs
+    .baseURL(baseUrl) // Here is the root for all relative URLs
     .acceptHeader("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8") // Here are the common headers
     .doNotTrackHeader("1")
     .acceptLanguageHeader("en-US,en;q=0.5")
@@ -26,7 +28,7 @@ class BasicSimulation extends Simulation {
              <hel:sayHello/>
            </soapenv:Body>"""))
       .check(status.is(200))
-      .check(bodyString.is("""<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><ns2:sayHelloResponse xmlns:ns2="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld"><return>Hello World!</return></ns2:sayHelloResponse></soap:Body></soap:Envelope>""")))
+      .check(bodyString.is("""<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><ns2:sayHelloResponse xmlns:ns2="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld"><return>Hello Wurld!</return></ns2:sayHelloResponse></soap:Body></soap:Envelope>""")))
   
       
       
