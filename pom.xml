@@ -9,27 +9,43 @@
 	<version>1.0</version>
 	<name>cd-docker</name>
 
+
+	<properties>
+		<!-- Docker Hosts -->
+		<infraDockerHostIp>localhost</infraDockerHostIp>
+		<infraDockerPort>2376</infraDockerPort>
+
+		<qaDockerHostIp>localhost</qaDockerHostIp>
+		<qaDockerPort>2376</qaDockerPort>
+
+		<accDockerHostIp>localhost</accDockerHostIp>
+		<accDockerPort>2376</accDockerPort>
+
+		<sonar.host.url>http://${infraDockerHostIp}:9000</sonar.host.url>
+		<sonar.jdbc.url>jdbc:postgresql://${infraDockerHostIp}:5432/sonar</sonar.jdbc.url>
+
+
+	</properties>
+
 	<distributionManagement>
 		<repository>
 			<id>releases</id>
-			<url>http://nexus:8081/content/repositories/releases/</url>
+			<url>http://${infraDockerHostIp}:8081/content/repositories/releases/</url>
 		</repository>
 	</distributionManagement>
 
-
-
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>2.3</version>
+			</plugin>
+		</plugins>
+	</build>
 
 	<modules>
 		<module>wildfly-webservice</module>
 	</modules>
-
-
-
-	<!-- docker -->
-	<!-- <dockerHost>192.168.0.24</dockerHost> -->
-	<!-- <dockerPort>2375</dockerPort> -->
-	<!-- <certPath></certPath> -->
-
-
 
 </project>

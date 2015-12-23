@@ -4,25 +4,29 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>de.alexkrieg</groupId>
 	<artifactId>wildfly-webservice</artifactId>
 	<version>1-${build.number}</version>
 	<packaging>war</packaging>
 	<name>wildfly-webservice</name>
 	<description>Hello World JAX-WS Web service</description>
+	
+	<parent>
+		<groupId>de.alexkrieg</groupId>
+		<version>1.0</version>
+		<artifactId>cd-docker</artifactId>
+	</parent>
+	
 
 
 	<properties>
 
 		<!-- services -->
-		<dockerHostIp>localhost</dockerHostIp>
-		<dockerPort>2376</dockerPort>
 
-		<wshost>${dockerHostIp}</wshost>
+		<wshost>${qaDockerHostIp}</wshost>
 		<wsport>8888</wsport>
 
 		<!-- docker image -->
-		<image.registryHost>${dockerHostIp}:5000/</image.registryHost>
+		<image.registryHost>${infraDockerHostIp}:5000/</image.registryHost>
 		<image.namespace>alitari/</image.namespace>
 		<image.repository>wildfly-webservice</image.repository>
 		<image.version>${project.version}</image.version>
@@ -42,9 +46,6 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
 
-		<sonar.host.url>http://${dockerHostIp}:9000</sonar.host.url>
-		<sonar.jdbc.url>jdbc:postgresql://${dockerHostIp}:5432/sonar</sonar.jdbc.url>
-
 	</properties>
 
 
@@ -54,16 +55,6 @@
 			<url>http://www.soapui.org/repository/maven2/</url>
 		</pluginRepository>
 	</pluginRepositories>
-
-	<distributionManagement>
-		<repository>
-			<id>releases</id>
-			<url>http://${dockerHostIp}:8081/content/repositories/releases/</url>
-		</repository>
-	</distributionManagement>
-
-
-
 
 	<dependencyManagement>
 		<dependencies>
@@ -193,7 +184,7 @@
 				<configuration>
 					<logDate>default</logDate>
 					<autoPull>true</autoPull>
-					<dockerHost>tcp://${dockerHostIp}:${dockerPort}</dockerHost>
+					<dockerHost>tcp://${qaDockerHostIp}:${qaDockerPort}</dockerHost>
 					<images>
 						<image>
 							<alias>server</alias>
@@ -290,15 +281,9 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>sonar-maven-plugin</artifactId>
-				<version>2.3</version>
-			</plugin>
+			
 		</plugins>
 	</build>
-
-
 
 </project>
 
