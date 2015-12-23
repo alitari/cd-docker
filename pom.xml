@@ -18,9 +18,11 @@
 
 		<qaDockerHostIp>localhost</qaDockerHostIp>
 		<qaDockerPort>2376</qaDockerPort>
+		<qaDockerCertPath>~/.docker</qaDockerCertPath>
 
 		<accDockerHostIp>localhost</accDockerHostIp>
 		<accDockerPort>2376</accDockerPort>
+		<accDockerCertPath>~/.docker</accDockerCertPath>
 		
 		<!-- docker image -->
 		<image.registryHost>${infraDockerHostIp}:5000/</image.registryHost>

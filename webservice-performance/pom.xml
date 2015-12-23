@@ -128,6 +128,7 @@
 					<logDate>default</logDate>
 					<autoPull>true</autoPull>
 					<dockerHost>tcp://${accDockerHostIp}:${accDockerPort}</dockerHost>
+					<certPath>${accDockerCertPath}</certPath>
 					<images>
 						<image>
 							<alias>server</alias>

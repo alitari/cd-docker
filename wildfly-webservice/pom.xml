@@ -182,6 +182,7 @@
 					<logDate>default</logDate>
 					<autoPull>true</autoPull>
 					<dockerHost>tcp://${qaDockerHostIp}:${qaDockerPort}</dockerHost>
+					<certPath>${qaDockerCertPath}</certPath>
 					<images>
 						<image>
 							<alias>server</alias>
@@ -221,6 +222,7 @@
 						<id>start</id>
 						<phase>pre-integration-test</phase>
 						<goals>
+						    <goal>remove</goal>
 							<goal>build</goal>
 							<goal>start</goal>
 						</goals>
