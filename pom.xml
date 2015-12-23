@@ -6,11 +6,12 @@
 	<groupId>de.alexkrieg</groupId>
 	<artifactId>cd-docker</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0</version>
+	<version>1.0-${buildNumber}</version>
 	<name>cd-docker</name>
 
 
 	<properties>
+	
 		<!-- Docker Hosts -->
 		<infraDockerHostIp>localhost</infraDockerHostIp>
 		<infraDockerPort>2376</infraDockerPort>
@@ -20,10 +21,13 @@
 
 		<accDockerHostIp>localhost</accDockerHostIp>
 		<accDockerPort>2376</accDockerPort>
+		
+		<!-- docker image -->
+		<image.registryHost>${infraDockerHostIp}:5000/</image.registryHost>
+		<image.namespace>alitari/</image.namespace>
 
 		<sonar.host.url>http://${infraDockerHostIp}:9000</sonar.host.url>
 		<sonar.jdbc.url>jdbc:postgresql://${infraDockerHostIp}:5432/sonar</sonar.jdbc.url>
-
 
 	</properties>
 
@@ -46,6 +50,7 @@
 
 	<modules>
 		<module>wildfly-webservice</module>
+		<module>webservice-performance</module>
 	</modules>
 
 </project>

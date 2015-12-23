@@ -2,18 +2,32 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>de.alexkrieg</groupId>
 	<artifactId>webservice-performance</artifactId>
-	<version>1.0</version>
+	<name>wildfly-webservice-performance</name>
+	<description>Stress and Performance Test for Wildfly Webservice</description>
+
+
+	<parent>
+		<groupId>de.alexkrieg</groupId>
+		<version>1.0-${buildNumber}</version>
+		<artifactId>cd-docker</artifactId>
+	</parent>
+
 
 	<properties>
+
+		<image.repository>wildfly-webservice</image.repository>
+		<image.version>${parent.version}</image.version>
+
+		<wshost>${accDockerHostIp}</wshost>
+		<wsport>8888</wsport>
+
+
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<scala.version>2.11.7</scala.version>
 		<encoding>UTF-8</encoding>
-
 		<gatling.version>2.1.7</gatling.version>
-
 		<scala-maven-plugin.version>3.2.0</scala-maven-plugin.version>
 	</properties>
 
@@ -105,17 +119,98 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<plugin>
+				<groupId>org.jolokia</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.13.7</version>
+				<configuration>
+					<logDate>default</logDate>
+					<autoPull>true</autoPull>
+					<dockerHost>tcp://${accDockerHostIp}:${accDockerPort}</dockerHost>
+					<images>
+						<image>
+							<alias>server</alias>
+							<name>${image.registryHost}${image.namespace}${image.repository}:${image.version}</name>
+
+
+							<run>
+								<ports>
+									<port>${wsport}:8080</port>
+								</ports>
+								<wait>
+									<!-- The plugin waits until this URL is reachable via HTTP ... -->
+									<!-- <log>WFLYSRV0025: WildFly Full 9.0.1.Final (WildFly Core 1.0.1.Final) 
+										started</log> -->
+									<!-- <http> -->
+									<!-- <url>http://${wshost}:${wsport}</url> -->
+									<!-- <method>GET</method> -->
+									<!-- </http> -->
+									<time>30000</time>
+									<shutdown>500</shutdown>
+								</wait>
+								<log>
+									<enabled>false</enabled>
+								</log>
+							</run>
+						</image>
+					</images>
+				</configuration>
+				<!-- Connect this plugin to the maven lifecycle around the integration-test 
+					phase. I.e. start the container in pre-integration-test and stop it in post-integration-test. -->
+				<executions>
+
+
+					<execution>
+						<id>start</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+							<goal>start</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>stop</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>push</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>remove</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+
+
+
 			<plugin>
 				<groupId>io.gatling</groupId>
 				<artifactId>gatling-maven-plugin</artifactId>
 				<version>${gatling.version}</version>
 				<executions>
 					<execution>
+						<id>start</id>
+						<phase>integration-test</phase>
 						<goals>
 							<goal>execute</goal>
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
 			</plugin>
 
 		</plugins>

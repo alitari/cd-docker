@@ -5,14 +5,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>wildfly-webservice</artifactId>
-	<version>1-${build.number}</version>
 	<packaging>war</packaging>
 	<name>wildfly-webservice</name>
 	<description>Hello World JAX-WS Web service</description>
 	
 	<parent>
 		<groupId>de.alexkrieg</groupId>
-		<version>1.0</version>
+		<version>1.0-${buildNumber}</version>
 		<artifactId>cd-docker</artifactId>
 	</parent>
 	
@@ -26,9 +25,7 @@
 		<wsport>8888</wsport>
 
 		<!-- docker image -->
-		<image.registryHost>${infraDockerHostIp}:5000/</image.registryHost>
-		<image.namespace>alitari/</image.namespace>
-		<image.repository>wildfly-webservice</image.repository>
+		<image.repository>${project.artifactId}</image.repository>
 		<image.version>${project.version}</image.version>
 
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

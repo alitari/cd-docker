@@ -5,7 +5,7 @@ import io.gatling.http.Predef._
 
 class BasicSimulation extends Simulation {
 
-  val baseUrl = System.getProperty("baseUrl")
+  val baseUrl = "http://"+System.getProperty("accDockerHostIp")+":8888"
   
   val httpConf = http
     .baseURL(baseUrl) // Here is the root for all relative URLs
@@ -47,5 +47,5 @@ class BasicSimulation extends Simulation {
       setUp(scn1.inject(atOnceUsers(5)).protocols(httpConf),
             scn2.inject(rampUsers(500) over (20 ) ).protocols(httpConf))
             .assertions(global.successfulRequests.percent.is(100),
-                        global.responseTime.max.lessThan(500))
+                        global.responseTime.mean.lessThan(200))
 }
