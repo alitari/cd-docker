@@ -13,26 +13,26 @@
 	<properties>
 	
 		<!-- Docker Hosts -->
-		<infraDockerHostIp>localhost</infraDockerHostIp>
-		<infraDockerPort>2376</infraDockerPort>
+		<infraDockerHostIp>${env.DOCKER_HOST_IP_INFRA}</infraDockerHostIp>
+		<infraDockerPort>${env.DOCKER_HOST_PORT_INFRA}</infraDockerPort>
 
-		<qaDockerHostIp>localhost</qaDockerHostIp>
-		<qaDockerPort>2376</qaDockerPort>
-		<qaDockerCertPath>~/.docker</qaDockerCertPath>
+		<qaDockerHostIp>${env.DOCKER_HOST_IP_QA}</qaDockerHostIp>
+		<qaDockerPort>${env.DOCKER_HOST_PORT_QA}</qaDockerPort>
+		<qaDockerCertPath>${env.DOCKER_CERT_PATH_QA}</qaDockerCertPath>
 
-		<accDockerHostIp>localhost</accDockerHostIp>
-		<accDockerPort>2376</accDockerPort>
-		<accDockerCertPath>~/.docker</accDockerCertPath>
+		<accDockerHostIp>${env.DOCKER_HOST_IP_ACC}</accDockerHostIp>
+		<accDockerPort>${env.DOCKER_HOST_PORT_ACC}</accDockerPort>
+		<accDockerCertPath>${env.DOCKER_CERT_PATH_ACC}</accDockerCertPath>
 		
 		<!-- docker image -->
-		<image.registryHost>${infraDockerHostIp}:5000/</image.registryHost>
+		<image.registryHost>${infraDockerHostIp}:${env.DOCKERREGISTRY_PORT}/</image.registryHost>
 		<image.namespace>alitari/</image.namespace>
 
 		<sonar.host.url>http://${infraDockerHostIp}:9000</sonar.host.url>
 		<sonar.jdbc.url>jdbc:postgresql://${infraDockerHostIp}:5432/sonar</sonar.jdbc.url>
 
 	</properties>
-
+	
 	<distributionManagement>
 		<repository>
 			<id>releases</id>

@@ -5,7 +5,7 @@ import io.gatling.http.Predef._
 
 class BasicSimulation extends Simulation {
 
-  val baseUrl = "http://"+System.getProperty("accDockerHostIp")+":8888"
+  val baseUrl = "http://"+System.getenv("DOCKER_HOST_IP_ACC")+":8888"
   
   val httpConf = http
     .baseURL(baseUrl) // Here is the root for all relative URLs
