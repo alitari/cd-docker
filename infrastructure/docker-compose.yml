@@ -16,6 +16,8 @@ registry-ui:
   - 8080:8080
   environment:
   - REG1="http://${DOCKER_HOST_IP_INFRA}:${DOCKERREGISTRY_PORT}/v1/"
+  volumes:
+  - /etc/docker-registry-ui:/var/lib/h2
 sonarqube:
   image: sonarqube:5.1
   ports:
@@ -28,3 +30,23 @@ sonar-db:
   - POSTGRES_PASSWORD=sonar
   volumes:
   - /etc/postgres/sonar/data:/var/lib/postgresql/data
+jenkins:
+  build: jenkins
+  ports:
+  - 8180:8080
+  - 50000:50000
+  environment:
+  - DOCKERREGISTRY_PORT=${DOCKERREGISTRY_PORT}
+  - DOCKER_HOST_IP_INFRA=${DOCKER_HOST_IP_INFRA}
+  - DOCKER_HOST_PORT_INFRA=${DOCKER_HOST_PORT_INFRA}
+  - DOCKER_HOST_IP_QA=${DOCKER_HOST_IP_QA}
+  - DOCKER_HOST_PORT_QA=${DOCKER_HOST_PORT_QA}
+  - DOCKER_CERT_PATH_QA=/.docker/qa
+  - DOCKER_HOST_IP_ACC=${DOCKER_HOST_IP_ACC}
+  - DOCKER_HOST_PORT_ACC=${DOCKER_HOST_PORT_ACC}
+  - DOCKER_CERT_PATH_ACC=/.docker/acc
+  volumes:
+  - /etc/jenkins_home:/var/jenkins_home
+  - ${DOCKER_CERT_PATH_QA}:/.docker/qa
+  - ${DOCKER_CERT_PATH_ACC}:/.docker/acc
+  
