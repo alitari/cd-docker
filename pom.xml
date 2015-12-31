@@ -29,7 +29,7 @@
 		<image.namespace>alitari/</image.namespace>
 
 		<sonar.host.url>http://${infraDockerHostIp}:9000</sonar.host.url>
-		<sonar.jdbc.url>jdbc:postgresql://${infraDockerHostIp}:5432/sonar</sonar.jdbc.url>
+		<sonar.jdbc.url>jdbc:h2:tcp://${infraDockerHostIp}/sonar</sonar.jdbc.url>
 
 	</properties>
 	
