@@ -5,31 +5,31 @@ nexus:
   volumes:
   - /etc/nexus-data:/sonatype-work
 registry:
-  image: registry
+  image: registry:2
   ports:
   - ${DOCKERREGISTRY_PORT}:5000
   volumes:
   - /etc/docker-registry:/var/lib/registry
-registry-ui:
-  image: atcol/docker-registry-ui
+registry-frontend:
+  image: konradkleine/docker-registry-frontend:v2
   ports:
-  - 8080:8080
+  - 8080:80
   environment:
   - REG1="http://${DOCKER_HOST_IP_INFRA}:${DOCKERREGISTRY_PORT}/v1/"
-  volumes:
-  - /etc/docker-registry-ui:/var/lib/h2
+  - ENV_DOCKER_REGISTRY_HOST=${DOCKER_HOST_IP_INFRA}
+  - ENV_DOCKER_REGISTRY_PORT=${DOCKERREGISTRY_PORT}
 sonarqube:
   image: sonarqube:5.1
   ports:
   - 9000:9000
   - 9092:9092
-sonar-db:
-  image: postgres
-  environment:
-  - POSTGRES_USER=sonar
-  - POSTGRES_PASSWORD=sonar
-  volumes:
-  - /etc/postgres/sonar/data:/var/lib/postgresql/data
+#sonar-db:
+#  image: postgres
+#  environment:
+#  - POSTGRES_USER=sonar
+#  - POSTGRES_PASSWORD=sonar
+#  volumes:
+#  - /etc/postgres/sonar/data:/var/lib/postgresql/data
 jenkins:
   build: jenkins
   ports:
