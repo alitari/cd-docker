@@ -1,6 +1,6 @@
 echo "Setting up Docker hosts..."
 export DOCKERREGISTRY_PORT=5000
-docker-machine create --driver virtualbox infra
+docker-machine create --driver virtualbox --virtualbox-memory 4096 infra 
 docker-machine start infra
 eval "$(docker-machine env infra)"
 export DOCKER_HOST_IP_INFRA=${DOCKER_HOST%:*}; DOCKER_HOST_IP_INFRA=${DOCKER_HOST_IP_INFRA#*//};
