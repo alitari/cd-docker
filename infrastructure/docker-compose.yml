@@ -22,14 +22,19 @@ sonarqube:
   image: sonarqube:5.1
   ports:
   - 9000:9000
-  - 9092:9092
-#sonar-db:
-#  image: postgres
-#  environment:
-#  - POSTGRES_USER=sonar
-#  - POSTGRES_PASSWORD=sonar
-#  volumes:
-#  - /etc/postgres/sonar/data:/var/lib/postgresql/data
+  environment:
+  - SONARQUBE_JDBC_USERNAME=sonar
+  - SONARQUBE_JDBC_PASSWORD=sonar
+  - SONARQUBE_JDBC_URL=jdbc:postgresql://${DOCKER_HOST_IP_INFRA}:5432/sonar
+sonar-db:
+  image: postgres
+  ports:
+  - 5432:5432
+  environment:
+  - POSTGRES_USER=sonar
+  - POSTGRES_PASSWORD=sonar
+  volumes:
+  - /etc/sonar-data:/var/lib/postgresql/data
 jenkins:
   build: jenkins
   ports:

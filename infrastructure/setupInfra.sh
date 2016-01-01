@@ -5,6 +5,8 @@ echo $DOCKER_HOST
 docker-machine ssh infra "sudo mkdir /etc/docker-registry; sudo chmod a+w /etc/docker-registry"
 docker-machine ssh infra "sudo mkdir /etc/nexus-data; sudo chmod a+w /etc/nexus-data"
 docker-machine ssh infra "sudo mkdir /etc/jenkins_home; sudo chmod a+w /etc/jenkins_home"
+docker-machine ssh infra "sudo mkdir /etc/sonar-data; sudo chmod 0700 /etc/postgres/sonar/data"
+
 
 docker-compose up -d
 docker-compose ps
