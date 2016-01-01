@@ -8,13 +8,13 @@
 	<packaging>war</packaging>
 	<name>wildfly-webservice</name>
 	<description>Hello World JAX-WS Web service</description>
-	
+
 	<parent>
 		<groupId>de.alexkrieg</groupId>
 		<version>1.0-${buildNumber}</version>
 		<artifactId>cd-docker</artifactId>
 	</parent>
-	
+
 
 
 	<properties>
@@ -173,6 +173,29 @@
 					</archive>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+					<instrumentation>
+						<ignores>
+						</ignores>
+						<excludes>
+						</excludes>
+					</instrumentation>
+					<formats>
+						<format>xml</format>
+					</formats>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
 			<plugin>
 				<groupId>org.jolokia</groupId>
@@ -199,11 +222,12 @@
 								</ports>
 								<wait>
 									<!-- The plugin waits until this URL is reachable via HTTP ... -->
-<!-- 									<log>WFLYSRV0025: WildFly Full 9.0.1.Final (WildFly Core 1.0.1.Final) started</log> -->
-<!-- 									<http> -->
-<!-- 										<url>http://${wshost}:${wsport}</url> -->
-<!-- 										<method>GET</method> -->
-<!-- 									</http> -->
+									<!-- <log>WFLYSRV0025: WildFly Full 9.0.1.Final (WildFly Core 1.0.1.Final) 
+										started</log> -->
+									<!-- <http> -->
+									<!-- <url>http://${wshost}:${wsport}</url> -->
+									<!-- <method>GET</method> -->
+									<!-- </http> -->
 									<time>30000</time>
 									<shutdown>500</shutdown>
 								</wait>
@@ -222,7 +246,7 @@
 						<id>start</id>
 						<phase>pre-integration-test</phase>
 						<goals>
-						    <goal>remove</goal>
+							<goal>remove</goal>
 							<goal>build</goal>
 							<goal>start</goal>
 						</goals>
@@ -280,9 +304,10 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 		</plugins>
 	</build>
+
 
 </project>
 
