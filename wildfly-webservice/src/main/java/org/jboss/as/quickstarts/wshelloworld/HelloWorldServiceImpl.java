@@ -11,9 +11,8 @@ import org.apache.log4j.Logger;
 @WebService(serviceName = "HelloWorldService", portName = "HelloWorld", name = "HelloWorld", endpointInterface = "org.jboss.as.quickstarts.wshelloworld.HelloWorldService", targetNamespace = "http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld")
 public class HelloWorldServiceImpl implements HelloWorldService {
 
-	private static final Logger LOGGER = Logger.getLogger(HelloWorldServiceImpl.class);
-	
-	
+    private static final Logger LOGGER = Logger.getLogger(HelloWorldServiceImpl.class);
+
     @Override
     public String sayHello() {
         return sayHelloToName("World");
@@ -28,7 +27,7 @@ public class HelloWorldServiceImpl implements HelloWorldService {
 
     @Override
     public String sayHelloToNames(final List<String> names) {
-    	LOGGER.info("called sayHelloToNames("+names+")");
+        LOGGER.info("called sayHelloToNames(" + names + ")");
         return "Hello " + createNameListString(names);
     }
 
