@@ -1,4 +1,4 @@
-package de.alexkrieg.persontracker.to;
+package de.alexkrieg.persontracker.ws.to;
 
 public class MemberTo extends MemberBasic {
 

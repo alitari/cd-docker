@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="Persontracker" resourceRoot="${projectDir}" soapui-version="5.2.0" abortOnError="false" runType="SEQUENTIAL" id="e5a71165-2155-44ae-bdfd-185124fd9888" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="9ea5d3e3-022b-423c-aa4b-799495e88064" wsaVersion="NONE" name="MemberTrackerServiceSoapBinding" type="wsdl" bindingName="{http://www.alexkrieg.de/cd-docker/membertracker}MemberTrackerServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8090/wildfly-webservice/MemberTrackerService?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8090/wildfly-webservice/MemberTrackerService?wsdl"><con:part><con:url>http://localhost:8090/wildfly-webservice/MemberTrackerService?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="MemberTrackerService" targetNamespace="http://www.alexkrieg.de/cd-docker/membertracker" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.alexkrieg.de/cd-docker/membertracker" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http">
+  <wsdl:types>
+    <xs:schema elementFormDefault="unqualified" targetNamespace="http://www.alexkrieg.de/cd-docker/membertracker" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="addMember" type="tns:addMember"/>
+      <xs:element name="addMemberResponse" type="tns:addMemberResponse"/>
+      <xs:element name="deleteMember" type="tns:deleteMember"/>
+      <xs:element name="deleteMemberResponse" type="tns:deleteMemberResponse"/>
+      <xs:complexType name="deleteMember">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Member" type="tns:addMemberTo"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="addMemberTo">
+        <xs:complexContent>
+          <xs:extension base="tns:memberBasic">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="email" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="memberBasic">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="deleteMemberResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="deletedMember" type="tns:memberTo"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="memberTo">
+        <xs:complexContent>
+          <xs:extension base="tns:memberBasic">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="email" type="xs:string"/>
+              <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="addMember">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Member" type="tns:addMemberTo"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="addMemberResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="addedMember" type="tns:memberTo"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="deleteMemberResponse">
+    <wsdl:part element="tns:deleteMemberResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addMember">
+    <wsdl:part element="tns:addMember" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addMemberResponse">
+    <wsdl:part element="tns:addMemberResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteMember">
+    <wsdl:part element="tns:deleteMember" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="MemberTrackerService">
+    <wsdl:operation name="deleteMember">
+      <wsdl:input message="tns:deleteMember" name="deleteMember"></wsdl:input>
+      <wsdl:output message="tns:deleteMemberResponse" name="deleteMemberResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addMember">
+      <wsdl:input message="tns:addMember" name="addMember"></wsdl:input>
+      <wsdl:output message="tns:addMemberResponse" name="addMemberResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MemberTrackerServiceSoapBinding" type="tns:MemberTrackerService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="deleteMember">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deleteMember">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteMemberResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addMember">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addMember">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addMemberResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MemberTrackerService">
+    <wsdl:port binding="tns:MemberTrackerServiceSoapBinding" name="MemberTracker">
+      <soap:address location="http://localhost:8090/wildfly-webservice/MemberTrackerService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8090/wildfly-webservice/MemberTrackerService</con:endpoint></con:endpoints><con:operation id="6bf516b4-ce6a-4fef-ab59-a1103374b005" isOneWay="false" action="" name="addMember" bindingOperationName="addMember" type="Request-Response" outputName="addMemberResponse" inputName="addMember" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="06ecf265-65f3-4cd2-9b65-3973752b5bae" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8090/wildfly-webservice/MemberTrackerService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:mem="http://www.alexkrieg.de/cd-docker/membertracker">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <mem:addMember>
+         <!--Optional:-->
+         <Member>
+            <!--Optional:-->
+            <email>?</email>
+         </Member>
+      </mem:addMember>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.alexkrieg.de/cd-docker/membertracker/MemberTrackerService/addMember"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="cd40af9f-22d8-4976-93d3-87bf1ce94d4d" isOneWay="false" action="" name="deleteMember" bindingOperationName="deleteMember" type="Request-Response" outputName="deleteMemberResponse" inputName="deleteMember" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="ef5a51f6-a0cc-4f24-9647-0c50f5d131a6" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8090/wildfly-webservice/MemberTrackerService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:mem="http://www.alexkrieg.de/cd-docker/membertracker">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <mem:deleteMember>
+         <!--Optional:-->
+         <Member>
+            <!--Optional:-->
+            <email>?</email>
+         </Member>
+      </mem:deleteMember>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.alexkrieg.de/cd-docker/membertracker/MemberTrackerService/deleteMember"/></con:call></con:operation></con:interface><con:testSuite id="d1946c58-746f-47aa-93e0-9c51eed168b4" name="MemberService"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="5118d6fb-576d-4c4b-8ddd-5691fc5acf98" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="addMember" searchProperties="true"><con:settings/><con:testStep type="request" id="f1cbd554-fbad-4964-96a6-3bdd3f0f4a7e" name="addMember"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>MemberTrackerServiceSoapBinding</con:interface><con:operation>addMember</con:operation><con:request name="addMember" id="d36480a9-c300-45c9-ae7c-f4b9341a5123"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://${wshost}:${wsport}/${wsname}/MemberService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:mem="http://www.alexkrieg.de/cd-docker/persontracker">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <mem:addMember>\r
+         <!--Optional:-->\r
+         <Member>\r
+            <!--Optional:-->\r
+            <email>mymail@testserver.com</email>\r
+         </Member>\r
+      </mem:addMember>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Valid HTTP Status Codes" id="8ad77311-9b2b-4573-b599-ac56112d0bc4" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" id="2faa5179-487c-4aaa-beba-33c9fd2c94ae" name="Not SOAP Fault"/><con:assertion type="XPath Match" id="884fc08c-3642-43d9-ade5-1b7c4d62ce7b" name="XPath Match"><con:configuration><path>declare namespace ns='http://www.alexkrieg.de/cd-docker/membertracker'
+//email</path><content>mymail@testserver.com</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.alexkrieg.de/cd-docker/membertracker/MemberTrackerService/addMember" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="d9479176-e915-44bf-93fa-3a615070c4c0" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="deleteMember" searchProperties="true"><con:settings/><con:testStep type="request" id="aa643fa3-d6a2-4f94-b42c-7bd6df7b064a" name="deleteMember"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>MemberTrackerServiceSoapBinding</con:interface><con:operation>deleteMember</con:operation><con:request name="deleteMember" id="ca48e5e0-e478-4e76-90b2-fcd78ca7a061"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://${wshost}:${wsport}/${wsname}/MemberService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:mem="http://www.alexkrieg.de/cd-docker/persontracker">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <mem:deleteMember>\r
+         <!--Optional:-->\r
+         <Member>\r
+            <!--Optional:-->\r
+            <email>memberMail@arcor.com</email>\r
+         </Member>\r
+      </mem:deleteMember>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Valid HTTP Status Codes" id="a4df38b8-f11a-44d2-9e03-dbad72b79531" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" id="9ead9594-9cbb-4c7f-b5c6-1274678115f0" name="Not SOAP Fault"/><con:assertion type="XPath Match" id="f5859c5c-738c-49bd-a10e-50e147bbb1e9" name="XPath Match"><con:configuration><path>declare namespace ns='http://www.alexkrieg.de/cd-docker/membertracker'
+//email</path><content>memberMail@arcor.com</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.alexkrieg.de/cd-docker/membertracker/MemberTrackerService/deleteMember" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>endpoint</con:name><con:value>http://${wshost}:${wsport}/${wsname}</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

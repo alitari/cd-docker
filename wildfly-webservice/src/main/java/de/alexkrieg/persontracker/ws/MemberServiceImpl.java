@@ -1,17 +1,17 @@
 
-package de.alexkrieg.persontracker;
+package de.alexkrieg.persontracker.ws;
 
 import javax.jws.WebService;
 
 import org.apache.log4j.Logger;
 
-import de.alexkrieg.persontracker.to.AddMemberTo;
-import de.alexkrieg.persontracker.to.MemberTo;
+import de.alexkrieg.persontracker.ws.to.AddMemberTo;
+import de.alexkrieg.persontracker.ws.to.MemberTo;
 
-@WebService(serviceName = "MemberTrackerService", portName = "MemberTracker", name = "MemberTracker", endpointInterface = "de.alexkrieg.persontracker.MemberTrackerService", targetNamespace = "http://www.alexkrieg.de/cd-docker/membertracker")
-public class MemberTrackerServiceImpl implements MemberTrackerService {
+@WebService(serviceName = "MemberService", portName = "MemberService", name = "MemberService", endpointInterface = "de.alexkrieg.persontracker.ws.MemberService", targetNamespace = "http://www.alexkrieg.de/cd-docker/persontracker")
+public class MemberServiceImpl implements MemberService {
 
-    private static final Logger LOGGER = Logger.getLogger(MemberTrackerServiceImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(MemberServiceImpl.class);
 
     @Override
     public MemberTo addMember(AddMemberTo addMember) {

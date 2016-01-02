@@ -1,16 +1,16 @@
 
-package de.alexkrieg.persontracker;
+package de.alexkrieg.persontracker.ws;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 
-import de.alexkrieg.persontracker.to.AddMemberTo;
-import de.alexkrieg.persontracker.to.MemberTo;
+import de.alexkrieg.persontracker.ws.to.AddMemberTo;
+import de.alexkrieg.persontracker.ws.to.MemberTo;
 
-@WebService(targetNamespace = "http://www.alexkrieg.de/cd-docker/membertracker")
-public interface MemberTrackerService {
+@WebService(targetNamespace = "http://www.alexkrieg.de/cd-docker/persontracker")
+public interface MemberService {
 
     @WebMethod
     @WebResult(name = "AddedMember")
