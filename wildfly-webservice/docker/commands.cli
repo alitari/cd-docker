@@ -1,0 +1,14 @@
+# Mark the commands below to be run as a batch
+batch
+
+# Install module containing the JDBC Driver.
+module add --name=org.postgres --resources=./postgresql-9.4.1207.jar --dependencies=javax.api,javax.transaction.api
+
+# Install the JDBC Driver on the application server
+/subsystem=datasources/jdbc-driver=postgres:add(driver-name="postgres",driver-module-name="org.postgres",driver-class-name=org.postgresql.Driver)
+
+#install the datasource which will connect to the default "postgres" database
+data-source add --jndi-name=java:/PostGreDS --name=PostgrePool --connection-url=jdbc:postgresql://192.168.99.100:5555/postgres --driver-name=postgres --user-name=postgres --password=postgres
+
+
+run-batch

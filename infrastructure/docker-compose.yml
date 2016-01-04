@@ -54,4 +54,16 @@ jenkins:
   - /etc/jenkins_home:/var/jenkins_home
   - ${DOCKER_CERT_PATH_QA}:/.docker/qa
   - ${DOCKER_CERT_PATH_ACC}:/.docker/acc
+app-db:
+  image: postgres
+  ports:
+  - 5555:5432
+  environment:
+  - POSTGRES_PASSWORD=postgres
+  volumes:
+  - /etc/app-data:/var/lib/postgresql/data
+adminer:
+  image: clue/adminer
+  ports:
+  - 8558:80
   
