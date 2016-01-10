@@ -1,6 +1,8 @@
 package de.alexkrieg.persontracker.ws.to;
 
 public class MemberTo extends MemberBasic {
+    
+    private String errorMessage;
 
     public String getEmail() {
         return email;
@@ -17,5 +19,15 @@ public class MemberTo extends MemberBasic {
     public void setId(long id) {
         this.id = id;
     }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+    
+    
 
 }

@@ -4,8 +4,11 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+import java.util.Optional;
+
 import javax.persistence.EntityManager;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.needle4j.annotation.ObjectUnderTest;
@@ -29,6 +32,12 @@ public class MemberRegistrationTest {
 
     private TransactionHelper transactionHelper = databaseRule.getTransactionHelper();
 
+    
+    @Before
+    public void setup() {
+        
+    }
+    
     @Test
     public void register() throws Exception {
         Member member = new Member.Builder("alex@test.de").hasPhone("07214536231").withName("Alex").livingIn("Germany")
@@ -42,6 +51,17 @@ public class MemberRegistrationTest {
         assertThat(registeredMember.getName(), is("Alex"));
         assertThat(registeredMember.getAddress(), is("Germany"));
     }
+    
+    @Test
+    public void findByEmail() throws Exception {
+        final String email = "alreadyThere@test.de";
+        Optional<Member> foundMember = memberRegistration.findByEmail(email);
+        assertThat(foundMember.isPresent(),is(false));
+        registerInTransaction(new Member.Builder(email).hasPhone("07214536231").withName("Alex").livingIn("Germany").build());
+        foundMember = memberRegistration.findByEmail(email);
+        assertThat(foundMember.isPresent(),is(true));
+    }
+
     
     @Test
     public void unregister() throws Exception {

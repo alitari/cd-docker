@@ -1,5 +1,6 @@
 package de.alexkrieg.persontracker.domain;
 
+import java.util.Optional;
 import java.util.logging.Logger;
 
 /*
@@ -22,6 +23,8 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.hibernate.Session;
@@ -36,7 +39,7 @@ public class MemberRegistration {
     @Inject
     private Logger log;
 
-    @Inject
+    @PersistenceContext(unitName="primary")
     private EntityManager em;
 
     @Transactional
@@ -47,14 +50,25 @@ public class MemberRegistration {
         return member;
     }
 
-    public Member findById(long id) throws Exception {
+    Member findById(long id) throws Exception {
         Session session = (Session) em.getDelegate();
         return (Member) session.byId(Member.class).load(id);
     }
 
-    public void unregister(long id)  {
-        log.info("unregister member with id="+id);
+    @Transactional
+    public void unregister(long id) throws Exception {
+        log.info("unregister member with id=" + id);
         em.createQuery("delete from Member where id = :id").setParameter("id", id).executeUpdate();
+    }
+
+    public Optional<Member> findByEmail(String email) throws Exception {
+        log.info("find member with email=" + email);
+        try {
+            return Optional.of(em.createQuery("from Member where email = :email", Member.class)
+                    .setParameter("email", email).getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 
 }
