@@ -10,7 +10,7 @@ The docker Toolbox:
 ## Getting started
 - clone this repo: `git clone https://github.com/alitari/cd-docker.git`
 - navigate to folder infrastructure of this repo `cd cd-docker/infrastructure`
-- set up the infrastructure `source ./setupHosts.sh; source ./setupInfra.sh`
+- set up the infrastructure `source ./setupHosts.sh; source ./startInfra.sh`
 - prepare nexus for anonymous deployments:
   - browse to nexus `http://$DOCKER_HOST_IP_INFRA:8081/`
   - login as admin with password: admin123
