@@ -18,6 +18,7 @@ registry-frontend:
   - REG1="http://${DOCKER_HOST_IP_INFRA}:${DOCKERREGISTRY_PORT}/v1/"
   - ENV_DOCKER_REGISTRY_HOST=${DOCKER_HOST_IP_INFRA}
   - ENV_DOCKER_REGISTRY_PORT=${DOCKERREGISTRY_PORT}
+  - ENV_MODE_BROWSE_ONLY=false
 sonarqube:
   image: sonarqube:5.1
   ports:
