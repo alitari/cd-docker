@@ -30,6 +30,8 @@ public class Member implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(insertable=false, updatable=false,
+           columnDefinition="BigSerial not null")
     private Long id;
 
     @NotNull
