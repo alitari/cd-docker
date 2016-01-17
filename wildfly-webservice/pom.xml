@@ -166,6 +166,12 @@
             <scope>test</scope>
             <version>2.3</version>
         </dependency>
+        
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>3.2.1</version>
+        </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -302,6 +308,9 @@
                                 <ports>
                                     <port>${wsport}:8080</port>
                                 </ports>
+                                <env>
+                                    <DBHOST>${infraDockerHostIp}</DBHOST>
+                                </env>
                                 <wait>
                                     <!-- The plugin waits until this URL is reachable via HTTP ... -->
                                     <!-- <log>WFLYSRV0025: WildFly Full 9.0.1.Final (WildFly Core 1.0.1.Final) started</log> -->

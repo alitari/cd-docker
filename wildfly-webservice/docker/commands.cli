@@ -8,7 +8,7 @@ module add --name=org.postgres --resources=wildfly/customization/postgresql-9.4.
 /subsystem=datasources/jdbc-driver=postgres:add(driver-name="postgres",driver-module-name="org.postgres",driver-class-name=org.postgresql.Driver)
 
 #install the datasource which will connect to the default "postgres" database
-data-source add --jndi-name=java:/PostgresDS --name=PostgrePool --connection-url=jdbc:postgresql://192.168.99.100:5555/postgres --driver-name=postgres --user-name=postgres --password=postgres
+data-source add --jndi-name=java:/PostgresDS --name=PostgrePool --connection-url=jdbc:postgresql://${dbhost:}:5555/postgres --driver-name=postgres --user-name=postgres --password=postgres
 
 
 run-batch
