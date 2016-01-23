@@ -270,6 +270,10 @@
                         <ignores>
                         </ignores>
                         <excludes>
+                          <exclude>db/migration/*.class</exclude>
+                          <exclude>**/IntializerBean.class</exclude>
+                          <exclude>de/alexkrieg/persontracker/ws/**/*.class</exclude>
+                          <exclude>**/Resources.class</exclude>
                         </excludes>
                     </instrumentation>
                     <formats>
