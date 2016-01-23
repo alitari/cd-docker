@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Digits;
@@ -28,10 +29,11 @@ public class Member implements Serializable {
     /** Default value included to remove warning. Remove or modify at will. **/
     private static final long serialVersionUID = 1L;
 
+    
+    @SequenceGenerator(allocationSize=1, initialValue=1, sequenceName="member_id_seq", name="member_id_seq")
+    @GeneratedValue(generator="member_id_seq", strategy=GenerationType.IDENTITY)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(insertable=false, updatable=false,
-           columnDefinition="BigSerial not null")
+    @Column(name="id")
     private Long id;
 
     @NotNull
