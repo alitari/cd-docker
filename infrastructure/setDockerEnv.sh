@@ -12,7 +12,8 @@ function setDockerEnv {
     export DOCKERREGISTRY_PORT=5000
     env | grep _$PF
 }
- 
+
+
 
  
  
