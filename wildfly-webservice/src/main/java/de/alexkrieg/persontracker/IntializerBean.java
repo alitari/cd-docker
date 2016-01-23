@@ -30,7 +30,8 @@ public class IntializerBean {
         Flyway flyway = new Flyway();
         flyway.setDataSource(ds);    
         flyway.setSchemas("public");
-        flyway.setLocations("db.migration");
+        flyway.setLocations("db.migration"); 
+//        flyway.setBaselineOnMigrate(true);
         MigrationInfoService migrationInfoService = flyway.info();
         log.info("Starting db migrations ... ("+migrationInfoService.pending().length+" pending)" );
         flyway.migrate();

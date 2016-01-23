@@ -10,9 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.Validate;
@@ -36,11 +34,6 @@ public class Member implements Serializable {
     @Column(name="id")
     private Long id;
 
-    @NotNull
-    @Size(min = 1, max = 25)
-    @Pattern(regexp = "[A-Za-z ]*", message = "must contain only letters and spaces")
-    private String name;
-
     /** using hibernate5 validators **/
     @NotNull
     @NotEmpty
@@ -48,12 +41,9 @@ public class Member implements Serializable {
     private String email;
 
     @NotNull
-    @Size(min = 9, max = 12)
-    @Digits(fraction = 0, integer = 12)
-    @Column(name = "phone_number")
-    private String phoneNumber;
-
-    private String address;
+    @Size(min = 8, max = 12)
+    @Column(name = "password")
+    private String password;
 
     public Long getId() {
         return id;
@@ -61,14 +51,6 @@ public class Member implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getEmail() {
@@ -79,55 +61,34 @@ public class Member implements Serializable {
         this.email = email;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPassword(String passsword) {
+        this.password = passsword;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
+    
     public static final class Builder {
 
         private final String email;
-        private String name;
-        private String address;
-        private String phoneNumber;
+        private String password;
 
         public Builder(final String email) {
             Validate.notNull(email, "Email is required");
             this.email = email;
         }
 
-        public Builder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder livingIn(String address) {
-            this.address = address;
-            return this;
-        }
-
-        public Builder hasPhone(String phoneNumber) {
-            this.phoneNumber = phoneNumber;
+        public Builder withPassword(String password) {
+            this.password = password;
             return this;
         }
 
         public Member build() {
             Member member = new Member();
             member.setEmail(email);
-            member.setAddress(address);
-            member.setName(name);
-            member.setPhoneNumber(phoneNumber);
+            member.setPassword(password);
             return member;
         }
 
