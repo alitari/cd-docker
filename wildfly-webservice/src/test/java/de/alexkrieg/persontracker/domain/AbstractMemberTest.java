@@ -2,7 +2,6 @@ package de.alexkrieg.persontracker.domain;
 
 import javax.persistence.EntityManager;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.needle4j.annotation.ObjectUnderTest;
 import org.needle4j.db.transaction.TransactionHelper;
@@ -12,7 +11,7 @@ import org.needle4j.junit.NeedleRule;
 
 import de.alexkrieg.persontracker.domain.model.Member;
 
-public class AbstractMemberTest {
+public abstract class AbstractMemberTest {
 
     @Rule
     public DatabaseRule databaseRule = new DatabaseRule();
