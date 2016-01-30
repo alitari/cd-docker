@@ -45,7 +45,10 @@ public class Member implements Serializable {
     @Column(name = "password")
     private String password;
 
-    public Long getId() {
+    @Size(max=40)
+	private String authToken;
+
+	public Long getId() {
         return id;
     }
 
@@ -69,11 +72,19 @@ public class Member implements Serializable {
         this.password = passsword;
     }
 
+    public String getAuthToken() {
+    	return authToken;
+    }
+    
+    public void setAuthToken(String authToken) {
+    	this.authToken= authToken;
+    }
     
     public static final class Builder {
 
         private final String email;
         private String password;
+        private String authToken;
 
         public Builder(final String email) {
             Validate.notNull(email, "Email is required");
@@ -84,14 +95,22 @@ public class Member implements Serializable {
             this.password = password;
             return this;
         }
+        
+        public Builder authorize(String authToken) {
+            this.authToken = authToken;
+            return this;
+        }
 
         public Member build() {
             Member member = new Member();
             member.setEmail(email);
             member.setPassword(password);
+            member.setAuthToken(authToken);
             return member;
         }
 
     }
+
+
 
 }

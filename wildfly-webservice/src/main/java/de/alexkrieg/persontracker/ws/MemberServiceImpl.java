@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.jws.WebService;
-import javax.validation.ValidationException;
 
 import de.alexkrieg.persontracker.domain.MemberRegistration;
 import de.alexkrieg.persontracker.domain.model.Member;
@@ -21,7 +20,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberTo addMember(AddMemberTo addMember) {
-        MemberTo result = new MemberTo();
+        MemberTo result = new MemberTo(); 
         try {
             Optional<Member> alreadyRegistered = memberRegistration.findByEmail(addMember.getEmail());
             if (alreadyRegistered.isPresent()) {

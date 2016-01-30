@@ -6,88 +6,46 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Optional;
 
-import javax.persistence.EntityManager;
-
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.needle4j.annotation.ObjectUnderTest;
-import org.needle4j.db.transaction.TransactionHelper;
-import org.needle4j.db.transaction.VoidRunnable;
-import org.needle4j.junit.DatabaseRule;
-import org.needle4j.junit.NeedleRule;
 
 import de.alexkrieg.persontracker.domain.model.Member;
 
-public class MemberRegistrationTest {
+public class MemberRegistrationTest extends AbstractMemberTest {
 
-    @Rule
-    public DatabaseRule databaseRule = new DatabaseRule();
+	@Before
+	public void setup() {
 
-    @Rule
-    public NeedleRule needleRule = new NeedleRule(databaseRule);
+	}
 
-    @ObjectUnderTest
-    private MemberRegistration memberRegistration;
+	@Test
+	public void register() throws Exception {
+		Member member = new Member.Builder("alex@test.de").withPassword("MySuperpass").build();
+		Long id = registerInTransaction(member);
+		Member registeredMember = memberRegistration.findById(id);
+		assertThat(registeredMember.getId(), is(id));
+		assertThat(registeredMember, is(not(member)));
+		assertThat(registeredMember.getEmail(), is("alex@test.de"));
+		assertThat(registeredMember.getPassword(), is("MySuperpass"));
+	}
 
-    private TransactionHelper transactionHelper = databaseRule.getTransactionHelper();
+	@Test
+	public void findByEmail() throws Exception {
+		final String email = "alreadyThere@test.de";
+		Optional<Member> foundMember = memberRegistration.findByEmail(email);
+		assertThat(foundMember.isPresent(), is(false));
+		registerInTransaction(new Member.Builder(email).withPassword("MySuperpass").build());
+		foundMember = memberRegistration.findByEmail(email);
+		assertThat(foundMember.isPresent(), is(true));
+	}
 
-    
-    @Before
-    public void setup() {
-        
-    }
-    
-    @Test
-    public void register() throws Exception {
-        Member member = new Member.Builder("alex@test.de").withPassword("MySuperpass")
-                .build();
-        Long id = registerInTransaction(member);
-        Member registeredMember = memberRegistration.findById(id);
-        assertThat(registeredMember.getId(), is(id));
-        assertThat(registeredMember, is(not(member)));
-        assertThat(registeredMember.getEmail(), is("alex@test.de"));
-        assertThat(registeredMember.getPassword(), is("MySuperpass"));
-    }
-    
-    @Test
-    public void findByEmail() throws Exception {
-        final String email = "alreadyThere@test.de";
-        Optional<Member> foundMember = memberRegistration.findByEmail(email);
-        assertThat(foundMember.isPresent(),is(false));
-        registerInTransaction(new Member.Builder(email).withPassword("MySuperpass").build());
-        foundMember = memberRegistration.findByEmail(email);
-        assertThat(foundMember.isPresent(),is(true));
-    }
+	@Test
+	public void unregister() throws Exception {
+		Member member = new Member.Builder("alex@test.de").withPassword("MySuperpass").build();
+		Long id = registerInTransaction(member);
+		Member registeredMember = memberRegistration.findById(id);
+		unregisterInTransaction(registeredMember);
+		assertThat(memberRegistration.findById(id), is((Member) null));
+	}
 
-    
-    @Test
-    public void unregister() throws Exception {
-        Member member = new Member.Builder("alex@test.de").withPassword("MySuperpass")
-                .build();
-        Long id = registerInTransaction(member);
-        Member registeredMember = memberRegistration.findById(id);
-        unregisterInTransaction(registeredMember);
-        assertThat(memberRegistration.findById(id), is((Member) null));
-    }
-
-    private Long registerInTransaction(Member member) throws Exception {
-        Long id = transactionHelper.executeInTransaction(new org.needle4j.db.transaction.Runnable<Long>() {
-            @Override
-            public Long run(EntityManager entityManager) throws Exception {
-                Member registeredMember = memberRegistration.register(member);
-                return registeredMember.getId();
-            }
-        });
-        return id;
-    }
-    
-    private void unregisterInTransaction(Member member) throws Exception {
-        transactionHelper.executeInTransaction(new VoidRunnable() {
-            @Override
-            public void doRun(EntityManager entityManager) throws Exception {
-                memberRegistration.unregister(member.getId());
-            }
-        });
-    }
 }
