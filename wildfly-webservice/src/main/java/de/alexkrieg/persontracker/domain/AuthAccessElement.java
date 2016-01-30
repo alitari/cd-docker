@@ -15,7 +15,7 @@ public class AuthAccessElement implements Serializable {
     private String authPermission;
     private String message;
 
-    public AuthAccessElement() {
+    public AuthAccessElement() {	
     	this(null,null,null,null);
     }
 
