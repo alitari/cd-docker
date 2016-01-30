@@ -1,0 +1,6 @@
+app-db:
+  image: postgres
+  ports:
+  - 5555:5432
+  environment:
+  - POSTGRES_PASSWORD=postgres

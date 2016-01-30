@@ -1,0 +1,13 @@
+gatling:1.1.1 
+promoted-builds:2.21 
+credentials:1.22 
+git-client:1.18.0 
+scm-api:0.2 
+mailer:1.15 
+token-macro:1.10 
+matrix-project:1.4 
+ssh-credentials:1.11 
+parameterized-trigger:2.4 
+git:2.4.0 
+maven-plugin:2.12.1 
+junit:1.10 
