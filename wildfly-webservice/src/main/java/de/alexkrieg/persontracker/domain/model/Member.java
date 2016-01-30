@@ -27,11 +27,10 @@ public class Member implements Serializable {
     /** Default value included to remove warning. Remove or modify at will. **/
     private static final long serialVersionUID = 1L;
 
-    
-    @SequenceGenerator(allocationSize=1, initialValue=1, sequenceName="member_id_seq", name="member_id_seq")
-    @GeneratedValue(generator="member_id_seq", strategy=GenerationType.IDENTITY)
+    @SequenceGenerator(allocationSize = 1, initialValue = 1, sequenceName = "member_id_seq", name = "member_id_seq")
+    @GeneratedValue(generator = "member_id_seq", strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
 
     /** using hibernate5 validators **/
@@ -45,10 +44,10 @@ public class Member implements Serializable {
     @Column(name = "password")
     private String password;
 
-    @Size(max=40)
-	private String authToken;
+    @Size(max = 40)
+    private String authToken;
 
-	public Long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -73,13 +72,13 @@ public class Member implements Serializable {
     }
 
     public String getAuthToken() {
-    	return authToken;
+        return authToken;
     }
-    
+
     public void setAuthToken(String authToken) {
-    	this.authToken= authToken;
+        this.authToken = authToken;
     }
-    
+
     public static final class Builder {
 
         private final String email;
@@ -95,7 +94,7 @@ public class Member implements Serializable {
             this.password = password;
             return this;
         }
-        
+
         public Builder authorize(String authToken) {
             this.authToken = authToken;
             return this;
@@ -110,7 +109,5 @@ public class Member implements Serializable {
         }
 
     }
-
-
 
 }

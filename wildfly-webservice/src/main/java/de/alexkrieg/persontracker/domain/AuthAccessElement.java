@@ -15,14 +15,14 @@ public class AuthAccessElement implements Serializable {
     private String authPermission;
     private String message;
 
-    public AuthAccessElement() {	
-    	this(null,null,null,null);
+    public AuthAccessElement() {
+        this(null, null, null, null);
     }
 
     public AuthAccessElement(String authId, String authToken, String authPermission) {
-        this(authId,authToken,authPermission,"OK");
+        this(authId, authToken, authPermission, "OK");
     }
-    
+
     public AuthAccessElement(String authId, String authToken, String authPermission, String message) {
         this.authId = authId;
         this.authToken = authToken;
@@ -30,36 +30,36 @@ public class AuthAccessElement implements Serializable {
         this.message = message;
     }
 
-	public String getAuthId() {
-		return authId;
-	}
+    public String getAuthId() {
+        return authId;
+    }
 
-	public void setAuthId(String authId) {
-		this.authId = authId;
-	}
+    public void setAuthId(String authId) {
+        this.authId = authId;
+    }
 
-	public String getAuthToken() {
-		return authToken;
-	}
+    public String getAuthToken() {
+        return authToken;
+    }
 
-	public void setAuthToken(String authToken) {
-		this.authToken = authToken;
-	}
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
+    }
 
-	public String getAuthPermission() {
-		return authPermission;
-	}
+    public String getAuthPermission() {
+        return authPermission;
+    }
 
-	public void setAuthPermission(String authPermission) {
-		this.authPermission = authPermission;
-	}
+    public void setAuthPermission(String authPermission) {
+        this.authPermission = authPermission;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    public String getMessage() {
+        return message;
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
 }
