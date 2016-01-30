@@ -10,9 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.Validate;
@@ -29,17 +27,11 @@ public class Member implements Serializable {
     /** Default value included to remove warning. Remove or modify at will. **/
     private static final long serialVersionUID = 1L;
 
-    
-    @SequenceGenerator(allocationSize=1, initialValue=1, sequenceName="member_id_seq", name="member_id_seq")
-    @GeneratedValue(generator="member_id_seq", strategy=GenerationType.IDENTITY)
+    @SequenceGenerator(allocationSize = 1, initialValue = 1, sequenceName = "member_id_seq", name = "member_id_seq")
+    @GeneratedValue(generator = "member_id_seq", strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
-
-    @NotNull
-    @Size(min = 1, max = 25)
-    @Pattern(regexp = "[A-Za-z ]*", message = "must contain only letters and spaces")
-    private String name;
 
     /** using hibernate5 validators **/
     @NotNull
@@ -48,12 +40,12 @@ public class Member implements Serializable {
     private String email;
 
     @NotNull
-    @Size(min = 9, max = 12)
-    @Digits(fraction = 0, integer = 12)
-    @Column(name = "phone_number")
-    private String phoneNumber;
+    @Size(min = 8, max = 12)
+    @Column(name = "password")
+    private String password;
 
-    private String address;
+    @Size(max = 40)
+    private String authToken;
 
     public Long getId() {
         return id;
@@ -61,14 +53,6 @@ public class Member implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getEmail() {
@@ -79,55 +63,48 @@ public class Member implements Serializable {
         this.email = email;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPassword(String passsword) {
+        this.password = passsword;
     }
 
-    public String getAddress() {
-        return address;
+    public String getAuthToken() {
+        return authToken;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
     }
 
     public static final class Builder {
 
         private final String email;
-        private String name;
-        private String address;
-        private String phoneNumber;
+        private String password;
+        private String authToken;
 
         public Builder(final String email) {
             Validate.notNull(email, "Email is required");
             this.email = email;
         }
 
-        public Builder withName(String name) {
-            this.name = name;
+        public Builder withPassword(String password) {
+            this.password = password;
             return this;
         }
 
-        public Builder livingIn(String address) {
-            this.address = address;
-            return this;
-        }
-
-        public Builder hasPhone(String phoneNumber) {
-            this.phoneNumber = phoneNumber;
+        public Builder authorize(String authToken) {
+            this.authToken = authToken;
             return this;
         }
 
         public Member build() {
             Member member = new Member();
             member.setEmail(email);
-            member.setAddress(address);
-            member.setName(name);
-            member.setPhoneNumber(phoneNumber);
+            member.setPassword(password);
+            member.setAuthToken(authToken);
             return member;
         }
 

@@ -5,5 +5,7 @@ class MemberBasic {
     protected long id;
 
     protected String email;
+    
+    protected String password;
 
 }

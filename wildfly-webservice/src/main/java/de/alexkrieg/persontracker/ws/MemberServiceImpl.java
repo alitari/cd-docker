@@ -5,11 +5,11 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.jws.WebService;
-import javax.validation.ValidationException;
 
 import de.alexkrieg.persontracker.domain.MemberRegistration;
 import de.alexkrieg.persontracker.domain.model.Member;
 import de.alexkrieg.persontracker.ws.to.AddMemberTo;
+import de.alexkrieg.persontracker.ws.to.DeleteMemberTo;
 import de.alexkrieg.persontracker.ws.to.MemberTo;
 
 @WebService(serviceName = "MemberService", portName = "MemberService", name = "MemberService", endpointInterface = "de.alexkrieg.persontracker.ws.MemberService", targetNamespace = "http://www.alexkrieg.de/cd-docker/persontracker")
@@ -20,7 +20,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberTo addMember(AddMemberTo addMember) {
-        MemberTo result = new MemberTo();
+        MemberTo result = new MemberTo(); 
         try {
             Optional<Member> alreadyRegistered = memberRegistration.findByEmail(addMember.getEmail());
             if (alreadyRegistered.isPresent()) {
@@ -36,7 +36,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     private static Member transformMember(AddMemberTo addMember) {
-        return new Member.Builder(addMember.getEmail()).hasPhone("07214536231").withName("Alex").livingIn("Germany")
+        return new Member.Builder(addMember.getEmail()).withPassword(addMember.getPassword())
                 .build();
     }
 
@@ -46,7 +46,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberTo deleteMember(AddMemberTo addMember) {
+    public MemberTo deleteMember(DeleteMemberTo addMember) {
         MemberTo result = new MemberTo();
         try {
             Optional<Member> memberExists = memberRegistration.findByEmail(addMember.getEmail());

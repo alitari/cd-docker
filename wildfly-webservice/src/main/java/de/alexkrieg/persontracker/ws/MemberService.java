@@ -7,6 +7,7 @@ import javax.jws.WebResult;
 import javax.jws.WebService;
 
 import de.alexkrieg.persontracker.ws.to.AddMemberTo;
+import de.alexkrieg.persontracker.ws.to.DeleteMemberTo;
 import de.alexkrieg.persontracker.ws.to.MemberTo;
 
 @WebService(targetNamespace = "http://www.alexkrieg.de/cd-docker/persontracker")
@@ -18,6 +19,6 @@ public interface MemberService {
 
     @WebMethod
     @WebResult(name = "DeletedMember")
-    public MemberTo deleteMember(@WebParam(name = "Member") AddMemberTo member);
+    public MemberTo deleteMember(@WebParam(name = "Member") DeleteMemberTo member);
 
 }
