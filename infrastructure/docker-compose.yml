@@ -39,14 +39,19 @@ sonar-db:
   - POSTGRES_PASSWORD=sonar
   volumes_from:
   - sonar-data
+sonar-conf:
+  image: sonarqube
+  command: echo "data-only container for sonar-db"
 sonarqube:
-  image: sonarqube:5.1
+  image: sonarqube
   ports:
   - 9000:9000
   environment:
   - SONARQUBE_JDBC_USERNAME=sonar
   - SONARQUBE_JDBC_PASSWORD=sonar
   - SONARQUBE_JDBC_URL=jdbc:postgresql://${DOCKER_HOST_IP_INFRA}:5432/sonar
+  volumes_from:
+  - sonar-conf
 jenkins-data:
   image: jenkins
   volumes:
