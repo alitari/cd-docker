@@ -332,7 +332,7 @@
 									<port>${wsport}:8080</port>
 								</ports>
 								<env>
-									<DBHOST>${infraDockerHostIp}</DBHOST>
+									<DBHOST>${qaDockerHostIp}</DBHOST>
 								</env>
 								<wait>
 									<!-- The plugin waits until this URL is reachable via HTTP ... -->
