@@ -9,6 +9,7 @@
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
 
     <class>de.alexkrieg.persontracker.domain.model.Member</class>
+    <class>de.alexkrieg.persontracker.domain.model.Group</class>
 
     <properties>
 

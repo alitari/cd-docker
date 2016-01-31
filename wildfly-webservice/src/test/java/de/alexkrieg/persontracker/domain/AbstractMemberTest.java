@@ -1,5 +1,9 @@
 package de.alexkrieg.persontracker.domain;
 
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 import javax.persistence.EntityManager;
 
 import org.junit.Rule;
@@ -23,33 +27,33 @@ public abstract class AbstractMemberTest {
     protected MemberRegistration memberRegistration;
 
     protected TransactionHelper transactionHelper = databaseRule.getTransactionHelper();
-    
+
     protected void deleteAll() throws Exception {
-        transactionHelper.executeInTransaction(new VoidRunnable() {
-            @Override
-            public void doRun(EntityManager entityManager) throws Exception {
-            	entityManager.createQuery("delete from Member").executeUpdate();
-            }
+        executeInTransaction(( EntityManager e) -> { 
+            e.createQuery("delete from Group").executeUpdate();
+            e.createQuery("delete from Member").executeUpdate();
+            return null;
         });
     }
-    
-    protected Long registerInTransaction(Member member) throws Exception {
-        Long id = transactionHelper.executeInTransaction(new org.needle4j.db.transaction.Runnable<Long>() {
+
+    protected <T> T executeInTransaction(Supplier<T> supplier) throws Exception {
+        T result = transactionHelper.executeInTransaction(new org.needle4j.db.transaction.Runnable<T>() {
             @Override
-            public Long run(EntityManager entityManager) throws Exception {
-                Member registeredMember = memberRegistration.register(member);
-                return registeredMember.getId();
+            public T run(EntityManager entityManager) throws Exception {
+                return supplier.get();
             }
         });
-        return id;
+        return result;
     }
-    
-    protected void unregisterInTransaction(Member member) throws Exception {
-        transactionHelper.executeInTransaction(new VoidRunnable() {
+
+    protected <T> T executeInTransaction(Function<EntityManager, T> function) throws Exception {
+        T result = transactionHelper.executeInTransaction(new org.needle4j.db.transaction.Runnable<T>() {
             @Override
-            public void doRun(EntityManager entityManager) throws Exception {
-                memberRegistration.unregister(member.getId());
+            public T run(EntityManager entityManager) throws Exception {
+                return function.apply(entityManager);
             }
         });
+        return result;
     }
+
 }

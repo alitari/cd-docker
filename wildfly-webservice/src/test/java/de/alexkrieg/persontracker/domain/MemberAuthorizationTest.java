@@ -25,7 +25,7 @@ public class MemberAuthorizationTest extends AbstractMemberTest {
 	@Test
 	public void loginSuccess() throws Exception {
 		Member member = new Member.Builder("alex@test.de").withPassword("MySuperpass").build();
-		registerInTransaction(member);
+		executeInTransaction(() -> memberRegistration.register(member));
 		AuthLoginElement loginElement = createAuthLogin(member);
 		AuthAccessElement access = memberAuthorization
 				.login(loginElement);
@@ -47,7 +47,7 @@ public class MemberAuthorizationTest extends AbstractMemberTest {
 	@Test
 	public void loginUnknownEmail() throws Exception {
 		Member member = new Member.Builder("alex@test.de").withPassword("MySuperpass").build();
-		registerInTransaction(member);
+		executeInTransaction(() -> memberRegistration.register(member));
 		AuthLoginElement loginElement = createAuthLogin(member);
 		loginElement.setEmail(loginElement.getEmail()+"X");
 		AuthAccessElement access = memberAuthorization
@@ -62,7 +62,7 @@ public class MemberAuthorizationTest extends AbstractMemberTest {
 	@Test
 	public void loginUnknownPassword() throws Exception {
 		Member member = new Member.Builder("alex@test.de").withPassword("MySuperpass").build();
-		registerInTransaction(member);
+		executeInTransaction(() -> memberRegistration.register(member));
 		AuthLoginElement loginElement = createAuthLogin(member);
 		loginElement.setPassword(loginElement.getPassword()+"X");
 		AuthAccessElement access = memberAuthorization
