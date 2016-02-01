@@ -84,34 +84,18 @@ public class Group implements Serializable {
         return EqualsBuilder.reflectionEquals(this, obj, new String[] {"members"});
     }
 
-
-
     public static final class Builder {
 
         private final String name;
-        private Set<Member> members = new HashSet<Member>();
 
         public Builder(final String name) {
             Validate.notNull(name, "Name is required");
             this.name = name;
         }
 
-        public Builder withMembers(List<Member> members) {
-            Validate.notNull(members," member must not be null");
-            Validate.notEmpty(members," member must not be empty ");
-            Validate.noNullElements(members);
-            this.members.addAll(members);
-            return this;
-        }
-        
-        public Builder withMembers(Member... member) {
-            return withMembers(Arrays.asList(member));
-        }
-
         public Group build() {
             Group group = new Group();
             group.setName(name);
-            group.setMembers(members);
             return group;
         }
 
