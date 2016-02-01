@@ -109,6 +109,14 @@ public class Member implements Serializable {
         getGroups().add(group);
         group.getMembers().add(this);
     }
+    
+    public void removeGroup(Group group) {
+        if (!getGroups().contains(group)) {
+            return;
+        }
+        getGroups().remove(group);
+        group.getMembers().remove(this);
+    }
 
     @Override
     public int hashCode() {

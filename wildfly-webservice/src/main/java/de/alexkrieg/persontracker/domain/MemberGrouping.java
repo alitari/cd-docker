@@ -1,17 +1,19 @@
 package de.alexkrieg.persontracker.domain;
 
+import static de.alexkrieg.persontracker.util.ValidationUtil.validateNotPresent;
+import static de.alexkrieg.persontracker.util.ValidationUtil.validatePresent;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-
-import org.apache.commons.lang.Validate;
 
 import de.alexkrieg.persontracker.domain.model.Group;
 import de.alexkrieg.persontracker.domain.model.Member;
@@ -26,14 +28,15 @@ public class MemberGrouping {
     private EntityManager em;
 
     @Transactional
-    public Group create(String name, Optional<List<Member>> members) {
-        Validate.isTrue(!findGroup(name).isPresent(), "Group with name " + name + " already exists");
-        Group.Builder builder = new Group.Builder(name);
-        if (members.isPresent()) {
-            builder.withMembers(members.get());
-        }
-        Group group = builder.build();
+    public Group create(String name, Optional<List<Member>> optMembers) {
+        validateNotPresent(findGroup(name), "Group with name ");
+        Group group = new Group.Builder(name).build();
         em.persist(group);
+        optMembers.ifPresent(members -> members.stream().forEach(member -> {
+            member.addGroup(group);
+            em.merge(member);
+        }));
+
         em.flush();
         return group;
     }
@@ -41,7 +44,7 @@ public class MemberGrouping {
     @Transactional
     public Member add(String name, Member member) {
         Optional<Group> group = findGroup(name);
-        Validate.isTrue(group.isPresent(), "Group with name " + name + " does not exist");
+        validatePresent(group, "Group with name " + name);
         member.addGroup(group.get());
         em.merge(member);
         em.merge(group.get());
@@ -57,7 +60,12 @@ public class MemberGrouping {
     @Transactional
     public Long delete(String name) {
         Optional<Group> group = findGroup(name);
-        Validate.isTrue(group.isPresent(), "Group with name " + name + " already exists");
+        validatePresent(group, "Group with name " + name);
+        Set<Member> members = group.get().getMembers();
+        members.stream().forEach(member -> {
+            member.getGroups().remove(group.get());
+            em.merge(member);
+        });
         em.createQuery(" delete from Group where name =:name").setParameter("name", name).executeUpdate();
         return group.get().getId();
     }
