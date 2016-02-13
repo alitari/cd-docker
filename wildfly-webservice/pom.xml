@@ -159,6 +159,13 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+
+
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
@@ -192,11 +199,6 @@
 			<version>2.3</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.flywaydb</groupId>
-			<artifactId>flyway-core</artifactId>
-			<version>3.2.1</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -218,6 +220,45 @@
 			<version>2.2.8</version>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.spockframework</groupId>
+			<artifactId>spock-core</artifactId>
+			<version>1.0-groovy-2.4</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Optional dependencies for using Spock -->
+		<dependency> <!-- use a specific Groovy version rather than the one specified by spock-core -->
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<scope>test</scope>
+			<version>2.4.1</version>
+		</dependency>
+		<dependency> <!-- enables mocking of classes (in addition to interfaces) -->
+			<groupId>cglib</groupId>
+			<artifactId>cglib-nodep</artifactId>
+			<version>3.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency> <!-- enables mocking of classes without default constructor (together with 
+				CGLIB) -->
+			<groupId>org.objenesis</groupId>
+			<artifactId>objenesis</artifactId>
+			<version>2.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.groovy.modules.http-builder</groupId>
+			<artifactId>http-builder</artifactId>
+			<version>0.7.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.groovy-wslite</groupId>
+			<artifactId>groovy-wslite</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+
 
 
 	</dependencies>
@@ -270,6 +311,15 @@
 			</plugin>
 
 			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.18.1</version>
+				<configuration>
+					<testSourceDirectory>src/test/java</testSourceDirectory>
+				</configuration>
+			</plugin>
+
+
+			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.5</version>
 				<configuration>
@@ -311,6 +361,21 @@
 					<execution>
 						<goals>
 							<goal>clean</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<!-- The gmavenplus plugin is used to compile Groovy code. To learn more 
+					about this plugin, visit https://github.com/groovy/GMavenPlus/wiki -->
+				<groupId>org.codehaus.gmavenplus</groupId>
+				<artifactId>gmavenplus-plugin</artifactId>
+				<version>1.4</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>testCompile</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -391,37 +456,24 @@
 				</executions>
 			</plugin>
 
-			<!-- the plugin supports both OSS and PRO versions of SoapUI -->
-
 			<plugin>
-				<groupId>com.github.redfish4ktc.soapui</groupId>
-				<artifactId>maven-soapui-extension-plugin</artifactId>
-				<version>4.6.4.2</version>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.18.1</version>
 				<configuration>
-					<projectFile>${project.build.directory}/test-classes/persontracker-soapui-project.xml</projectFile>
-					<junitReport>true</junitReport>
-					<exportwAll>true</exportwAll>
-					<printReport>false</printReport>
-					<testFailIgnore>true</testFailIgnore>
-					<globalProperties>
-						<value>wshost=${wshost}</value>
-						<value>wsport=${wsport}</value>
-						<value>wsname=${project.artifactId}</value>
-					</globalProperties>
+					<includes>
+						<include>**/*Spec.java</include>
+					</includes>
+					<systemProperties>
+						<wshost>${wshost}</wshost>
+						<wsport>${wsport}</wsport>
+						<wsname>${project.artifactId}</wsname>
+					</systemProperties>
 				</configuration>
 				<executions>
 					<execution>
-						<id>start</id>
-						<phase>integration-test</phase>
 						<goals>
-							<goal>test</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>test-verify</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>test-verify</goal>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
 						</goals>
 					</execution>
 				</executions>

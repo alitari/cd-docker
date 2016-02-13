@@ -24,7 +24,7 @@
          data source, this example data source is just for devleopment and testing! -->
       <!-- The datasource is deployed as WEB-INF/hibernate4-quickstart-ds.xml, you
          can find it in the source at src/main/webapp/WEB-INF/hibernate4-quickstart-ds.xml -->
-<!--       <jta-data-source>java:jboss/datasources/Hibernate4QuickstartDS</jta-data-source> -->
+<!--       <jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source> -->
       <jta-data-source>java:/PostgresDS</jta-data-source>
     
       <properties>
