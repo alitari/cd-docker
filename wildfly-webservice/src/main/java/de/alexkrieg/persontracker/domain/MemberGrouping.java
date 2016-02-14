@@ -3,7 +3,6 @@ package de.alexkrieg.persontracker.domain;
 import static de.alexkrieg.persontracker.util.ValidationUtil.validateNotPresent;
 import static de.alexkrieg.persontracker.util.ValidationUtil.validatePresent;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;

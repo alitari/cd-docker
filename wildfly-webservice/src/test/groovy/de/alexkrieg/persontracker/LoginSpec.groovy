@@ -16,13 +16,16 @@
 package de.alexkrieg.persontracker
 
 import wslite.rest.*
+
 import spock.lang.*
 import wslite.soap.*
 import static AddDeleteMemberSpec.addMemberBody;
 import static AddDeleteMemberSpec.deleteMemberBody
+import org.apache.http.HttpStatus
 
 class LoginSpec extends Specification {
 
+    
     private static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(LoginSpec.class);
 
     @Shared url = "http://${System.properties.'wshost'}:${System.properties.'wsport'}/${System.properties.'wsname'}/"
@@ -48,7 +51,7 @@ class LoginSpec extends Specification {
         }
 
         then: 'we should get a authentication token'
-        assert resp.statusCode == 200
+        assert resp.statusCode == HttpStatus.SC_OK
         assert resp.json.authToken.size() == 36
         assert resp.json.message == 'OK'
         assert resp.json.authId == 'loginjames@mail.com'
@@ -64,7 +67,7 @@ class LoginSpec extends Specification {
         }
 
         then: 'we should get an error message explaining the reason and no authentication token'
-        assert resp.statusCode == 200
+        assert resp.statusCode == HttpStatus.SC_OK
         assert !resp.json.authToken
         assert resp.json.message == 'Unknown member loginjames@mail.com'
         assert resp.json.authId == 'loginjames@mail.com'
@@ -80,7 +83,7 @@ class LoginSpec extends Specification {
         }
 
         then: 'we should get an error message explaining the reason and no authentication token'
-        assert resp.statusCode == 200
+        assert resp.statusCode == HttpStatus.SC_OK
         assert !resp.json.authToken
         assert resp.json.message == 'Unknown password for loginjames@mail.com'
         assert resp.json.authId == 'loginjames@mail.com'
@@ -100,7 +103,7 @@ class LoginSpec extends Specification {
         }
 
         then: 'we should get an message ok '
-        assert resp.statusCode == 200
+        assert resp.statusCode == HttpStatus.SC_OK
         assert !resp.json.authToken
         assert resp.json.message == 'OK'
         assert resp.json.authId == 'loginjames@mail.com'

@@ -46,7 +46,7 @@ public class Group implements Serializable {
     @Size(max = 40)
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "groups")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "groups")
     private Set<Member> members = new HashSet<Member>();
 
     public Set<Member> getMembers() {

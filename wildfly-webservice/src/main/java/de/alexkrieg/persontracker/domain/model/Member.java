@@ -56,7 +56,7 @@ public class Member implements Serializable {
     @Size(max = 40)
     private String authToken;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "member_group", joinColumns = {
             @JoinColumn(name = "member_id", nullable = false, updatable = false) }, inverseJoinColumns = {
                     @JoinColumn(name = "group_id", nullable = false, updatable = false) })
