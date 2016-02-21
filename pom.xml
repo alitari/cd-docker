@@ -19,10 +19,12 @@
 		<qaDockerHostIp>${env.DOCKER_HOST_IP_QA}</qaDockerHostIp>
 		<qaDockerPort>${env.DOCKER_HOST_PORT_QA}</qaDockerPort>
 		<qaDockerCertPath>${env.DOCKER_CERT_PATH_QA}</qaDockerCertPath>
+		<qaDbPassword>${env.DB_PASSWORD_QA}</qaDbPassword>
 
 		<accDockerHostIp>${env.DOCKER_HOST_IP_ACC}</accDockerHostIp>
 		<accDockerPort>${env.DOCKER_HOST_PORT_ACC}</accDockerPort>
 		<accDockerCertPath>${env.DOCKER_CERT_PATH_ACC}</accDockerCertPath>
+		<accDbPassword>${env.DB_PASSWORD_ACC}</accDbPassword>
 		
 		<!-- docker image -->
 		<image.registryHost>${infraDockerHostIp}:${env.DOCKERREGISTRY_PORT}/</image.registryHost>

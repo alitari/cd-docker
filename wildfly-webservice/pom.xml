@@ -460,7 +460,7 @@
 									<!-- <url>http://${wshost}:${wsport}</url> -->
 									<!-- <method>GET</method> -->
 									<!-- </http> -->
-									<time>180000</time>
+									<time>60000</time>
 									<shutdown>500</shutdown>
 								</wait>
 								<log>
