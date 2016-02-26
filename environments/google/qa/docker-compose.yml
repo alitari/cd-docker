@@ -1,0 +1,13 @@
+app-db:
+  image: postgres
+  ports:
+  - 5555:5432
+  environment:
+  - POSTGRES_PASSWORD=postgres
+adminer:
+  image: clue/adminer
+  ports:
+  - 8558:80
+  links:
+  - app-db:database
+  
