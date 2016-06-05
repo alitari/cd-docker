@@ -50,38 +50,16 @@ cf97994d5a14        clue/adminer                               "supervisord -c /
 29d411c3b998        konradkleine/docker-registry-frontend:v2   "/bin/sh -c $START_S   9 minutes ago       Up 9 minutes        443/tcp, 0.0.0.0:8080->80/tcp                     infra_registry-frontend_1
 def32aa83d1a        sonatype/nexus                             "/bin/sh -c '${JAVA_   10 minutes ago      Up 10 minutes       0.0.0.0:8081->8081/tcp                            infra_nexus_1
 ```
-### configure maven build
-    - buildNumber
-    - environment with values of `docker-machine env`
-      - `DOCKER_HOST_IP_QA`
-      - `DOCKER_HOST_PORT_QA`
-      - `DOCKER_CERT_PATH_QA`
- 
- 
-
-
-### infrastructure setup
-
-- navigate to folder infrastructure of this repo `cd cd-docker/infrastructure`
-- set up the infrastructure `source ./setupHosts.sh; source ./startInfra.sh`
-- prepare nexus for anonymous deployments:
+###  prepare nexus for anonymous deployments:
   - browse to nexus `http://$DOCKER_HOST_IP_INFRA:8081/`
   - login as admin with password: admin123
   - security -> users -> anonymous -> role management -> add
   - select `Repo: All Maven Repositories (Full control)`
-- create jenkins build job
-  - browse to jenkins configuration:  `http://$DOCKER_HOST_IP_INFRA:8180/configure`
-  - add maven installation ( automatic install from apache)
-  - create new 'freestyle' job `http://$DOCKER_HOST_IP_INFRA:8180/newJob`
-    - in Source-Code-Management use Git with this repo as url: `https://github.com/alitari/cd-docker.git`
-    - add maven goal as build step. Select your maven installation
-    - enter `clean deploy` as maven goals 
-    - open the extension area and enter `-DbuildNumber=${BUILD_NUMBER}` as JVM-Options
-    - add post build step JUnit-reports and enter `wildfly-webservice/target/*/TEST*.xml` as file name pattern
-    - add post build step `Track gatling simulation`
-    
+
+### configure maven build
+Now we can try a maven build ( cd to the repository root before) : `mvn clean deploy -DbuildNumber=1` 
 
 
 
-
-
+### configure jenkins
+TBD
