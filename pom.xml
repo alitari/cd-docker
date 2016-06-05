@@ -27,10 +27,8 @@
 		<accDbPassword>${env.DB_PASSWORD_ACC}</accDbPassword>
 		
 		<!-- docker image -->
-<!-- 		<image.registryHost>${infraDockerHostIp}:${env.DOCKERREGISTRY_PORT}/</image.registryHost> -->
-<!-- 		<image.namespace>alitari/</image.namespace> -->
-        <image.registryHost></image.registryHost>
-        <image.namespace></image.namespace>
+		<image.registryHost>${infraDockerHostIp}:${env.DOCKERREGISTRY_PORT}/</image.registryHost>
+		<image.namespace>alitari/</image.namespace>
 
 		<sonar.host.url>http://${infraDockerHostIp}:9000</sonar.host.url>
 		<sonar.jdbc.url>jdbc:postgresql://${infraDockerHostIp}/sonar</sonar.jdbc.url>

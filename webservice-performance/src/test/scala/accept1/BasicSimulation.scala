@@ -20,32 +20,26 @@ class BasicSimulation extends Simulation {
   
   val scn1 = scenario("Scenario1") // A scenario is a chain of requests and pauses
     .exec(http("request_11")
-      .post("/wildfly-webservice").headers(headers_10)
+      .post("/wildfly-webservice/MemberService").headers(headers_10)
       .body(StringBody("""
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:hel="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld">
-           <soapenv:Header/>
-           <soapenv:Body>
-             <hel:sayHello/>
-           </soapenv:Body>"""))
-      .check(status.is(200))
-      .check(bodyString.is("""<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><ns2:sayHelloResponse xmlns:ns2="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld"><return>Hello World!</return></ns2:sayHelloResponse></soap:Body></soap:Envelope>""")))
+                <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:mem="http://www.alexkrieg.de/cd-docker/persontracker">
+                  <soapenv:Header/>
+                    <soapenv:Body>
+                      <mem:addMember>
+                        <Member>
+                          <email>test@mailserver.com</email>
+                          <password>password</password>
+                        </Member>
+                      </mem:addMember>
+                    </soapenv:Body>
+                </soapenv:Envelope>
+                """))
+      .check(status.is(200)))
   
       
       
-   val scn2 = scenario("Scenario2") 
-    .exec(http("request_21")
-      .post("/wildfly-webservice").headers(headers_10)
-      .body(StringBody("""
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:hel="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld">
-           <soapenv:Header/>
-           <soapenv:Body>
-             <hel:sayHello/>
-           </soapenv:Body>"""))
-      .check(status.is(200))
-      .check(bodyString.is("""<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><ns2:sayHelloResponse xmlns:ns2="http://www.jboss.org/jbossas/quickstarts/wshelloworld/HelloWorld"><return>Hello World!</return></ns2:sayHelloResponse></soap:Body></soap:Envelope>""")))
   
-      setUp(scn1.inject(atOnceUsers(5)).protocols(httpConf),
-            scn2.inject(rampUsers(500) over (20 ) ).protocols(httpConf))
+      setUp(scn1.inject(atOnceUsers(5)).protocols(httpConf))
             .assertions(global.successfulRequests.percent.is(100),
-                        global.responseTime.mean.lessThan(200))
+                        global.responseTime.mean.lessThan(2000))
 }
