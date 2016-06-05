@@ -1,14 +1,26 @@
 # cd-docker
 ## Prerequisites
-The docker Toolbox:
-- you must use a bash-shell
-- docker: `docker --version` should print out Server version 1.9 or higher
-- docker-machine `docker-machine --version` should print out  0.4.0 
-- docker-compose `docker-compose` should print out 1.5.2
+- Docker Toolbox
 
 
-## Getting started
+## local setup eclipse
+
 - clone this repo: `git clone https://github.com/alitari/cd-docker.git`
+- eclipse with jee plugins
+- import as maven project
+
+### configure maven build
+    - buildNumber
+    - environment with values of `docker-machine env`
+      - `DOCKER_HOST_IP_QA`
+      - `DOCKER_HOST_PORT_QA`
+      - `DOCKER_CERT_PATH_QA`
+ 
+ 
+
+
+### infrastructure setup
+
 - navigate to folder infrastructure of this repo `cd cd-docker/infrastructure`
 - set up the infrastructure `source ./setupHosts.sh; source ./startInfra.sh`
 - prepare nexus for anonymous deployments:

@@ -434,8 +434,27 @@
 					<dockerHost>tcp://${qaDockerHostIp}:${qaDockerPort}</dockerHost>
 					<certPath>${qaDockerCertPath}</certPath>
 					<images>
+					    <image>
+							<alias>postgres</alias>
+							<name>postgres</name>
+							<run>
+								<ports>
+									<port>5555:5432</port>
+								</ports>
+								<env>
+                                   <POSTGRES_PASSWORD>postgres</POSTGRES_PASSWORD>
+                                </env>
+								<wait>
+									<time>1000</time>
+									<shutdown>500</shutdown>
+								</wait>
+								<log>
+									<enabled>false</enabled>
+								</log>
+							</run>
+						</image>
 						<image>
-							<alias>server</alias>
+							<alias>app</alias>
 							<name>${image.registryHost}${image.namespace}${image.repository}:${image.version}</name>
 							<build>
 								<assembly>
