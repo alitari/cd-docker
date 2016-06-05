@@ -29,7 +29,7 @@ class LoginSpec extends Specification {
     private static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(LoginSpec.class);
 
     @Shared url = "http://${System.properties.'wshost'}:${System.properties.'wsport'}/${System.properties.'wsname'}/"
-    @Shared restClient = new RESTClient( url )
+    @Shared restClient = new RESTClient( url+"rest/" )
     @Shared soapClient = new SOAPClient(url +"MemberService?wsdl")
 
 
