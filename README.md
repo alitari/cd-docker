@@ -2,12 +2,21 @@
 ## Prerequisites
 - Docker Toolbox
 
-
-## local setup eclipse
-
+## local setup
 - clone this repo: `git clone https://github.com/alitari/cd-docker.git`
-- eclipse with jee plugins
-- import as maven project
+
+### create docker hosts
+- `cd environments/local`
+- `source ./setupHosts.sh`
+- There must exist the 3 hosts:
+```
+$ docker-machine ls
+NAME      ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER    ERRORS
+acc       *        virtualbox   Running   tcp://192.168.99.103:2376           v1.11.2
+default   -        virtualbox   Running   tcp://192.168.99.100:2376           v1.11.2
+infra     -        virtualbox   Running   tcp://192.168.99.101:2376           v1.11.2
+qa        -        virtualbox   Running   tcp://192.168.99.102:2376           v1.11.2
+```
 
 ### configure maven build
     - buildNumber
